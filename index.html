@@ -2,38 +2,1051 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MoodSpark — Your daily spark</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MoodSpark: Focus &amp; Mood for iPhone</title>
+<meta name="description" content="MoodSpark 1.1: Focus with Sparky, talk your day through out loud, a daily quote made for your style and a one-tap mood check-in. English and Arabic. Made for iOS 27.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@400;500;600;700&display=swap">
 <style>
-  :root { --bg:#F4F6FB; --card:#fff; --text:#0F1222; --muted:#6B7280; --primary:#3D5AFE; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg:#0B0E1A; --card:#161A2B; --text:#F5F7FF; --muted:#9AA3B2; --primary:#6478FF; }
+/* Layout: a tall Apple-style product scroll. Oversized headlines over big phone renders.
+   Focus leads on a light page, Talk to Sparky gets a deep-indigo night band (the voice screen's own colors),
+   then the daily spark, mood, iOS 27, privacy and Plus. */
+@property --m { syntax: '<color>'; inherits: true; initial-value: #F5A623; }
+:root {
+  --paper: #F4F6FB;          /* the app's own background */
+  --surface: #FFFFFF;
+  --ink: #0F1222;
+  --muted: #5B6276;
+  --line: rgba(15, 18, 34, .09);
+  --spark: #3D5AFE;          /* the app's primary indigo */
+  --violet: #8B5BFF;
+  --shadow: rgba(32, 40, 110, .28);
+  --bezel: #12141C;
+  --bezel-edge: #2A2E3A;
+  /* the voice screen's gradient; stays dark in both themes */
+  --night: #14123A; --night-2: #221E68; --night-3: #33289A;
+  --night-ink: #F2F3FF; --night-muted: #B3B6D8; --night-accent: #C3B2FF;
+  /* the five moods, exactly as the app colors them */
+  --great: #F5A623; --good: #2BB673; --okay: #5B8DEF; --low: #8C7AE6; --stressed: #EB5757;
+  --end: #EB5757; --rec: #FF5A7E;
+  --display: "Readex Pro", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --body: "Figtree", "IBM Plex Sans Arabic", -apple-system, system-ui, sans-serif;
+  --m: var(--great);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #090B16; --surface: #131728; --ink: #F3F5FF; --muted: #9BA3BA;
+    --line: rgba(255, 255, 255, .09); --spark: #7088FF; --violet: #A880FF;
+    --shadow: rgba(0, 0, 0, .6); --bezel-edge: #3A3F50; color-scheme: dark;
   }
-  * { margin:0; box-sizing:border-box; }
-  body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; line-height:1.6; }
-  .wrap { max-width:640px; margin:0 auto; padding:48px 24px; }
-  h1 { font-size:2.4rem; background:linear-gradient(135deg,#3D5AFE,#8B5BFF); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .tag { color:var(--muted); font-size:1.1rem; margin:8px 0 32px; }
-  .card { background:var(--card); border-radius:20px; padding:24px; margin:16px 0; }
-  .card h2 { font-size:1.05rem; margin-bottom:6px; }
-  .card p { color:var(--muted); font-size:.95rem; }
-  a { color:var(--primary); }
-  footer { margin-top:40px; color:var(--muted); font-size:.85rem; }
+}
+:root[data-theme="dark"] {
+  --paper: #090B16; --surface: #131728; --ink: #F3F5FF; --muted: #9BA3BA;
+  --line: rgba(255, 255, 255, .09); --spark: #7088FF; --violet: #A880FF;
+  --shadow: rgba(0, 0, 0, .6); --bezel-edge: #3A3F50; color-scheme: dark;
+}
+html[lang="ar"] { --body: "IBM Plex Sans Arabic", "Figtree", system-ui, sans-serif; }
+/* One switch for the app-pausing claims: add class "no-pause" to <html> if Apple's
+   Family Controls approval isn't in by launch. */
+.no-pause [data-pause] { display: none !important; }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--body); font-size: 17px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--spark); }
+:focus-visible { outline: 3px solid var(--spark); outline-offset: 3px; border-radius: 8px; }
+
+.wrap { max-width: 1140px; margin: 0 auto; padding-inline: 20px; }
+section { padding-block: clamp(80px, 11vw, 150px); }
+
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; color: var(--ink); }
+h1 { font-size: clamp(2.9rem, 8.2vw, 6.6rem); line-height: 1; font-weight: 700; letter-spacing: -.035em; }
+h2 { font-size: clamp(2.3rem, 5.6vw, 4.4rem); line-height: 1.04; font-weight: 700; letter-spacing: -.03em; }
+h3 { font-size: clamp(1.4rem, 2.4vw, 1.85rem); line-height: 1.15; font-weight: 600; letter-spacing: -.015em; }
+html[lang="ar"] :is(h1, h2, h3, .eyebrow, .big) { letter-spacing: 0; line-height: 1.3; }
+p { margin: 0; text-wrap: pretty; }
+.lede { font-size: clamp(1.1rem, 1.9vw, 1.4rem); color: var(--muted); max-width: 42ch; line-height: 1.5; }
+.center { text-align: center; }
+.center .lede { margin-inline: auto; }
+.eyebrow {
+  font-family: var(--display); font-size: .85rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .14em; color: var(--spark); margin-bottom: 18px; display: block;
+}
+.new { display: inline-block; margin-inline-start: 8px; padding: 2px 9px; border-radius: 999px; font-size: .72rem; letter-spacing: .08em;
+  background: color-mix(in srgb, var(--spark) 14%, transparent); }
+.grad {
+  background: linear-gradient(100deg, var(--spark) 10%, var(--violet) 90%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.stack { display: grid; gap: 22px; }
+.plus-tag { display: inline-block; vertical-align: middle; margin-inline-start: 8px; font: 600 .75rem var(--body); color: #fff;
+  background: linear-gradient(100deg, #3D5AFE, #8B5BFF); padding: 3px 10px; border-radius: 999px; letter-spacing: .02em; }
+
+/* ---------- nav ---------- */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  backdrop-filter: saturate(1.6) blur(14px); -webkit-backdrop-filter: saturate(1.6) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.nav .wrap { display: flex; align-items: center; gap: 28px; height: 60px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-family: var(--display); font-weight: 600; font-size: 1.1rem; }
+.brand img { width: 30px; height: 30px; border-radius: 8px; }
+.nav-links { display: flex; gap: 22px; margin-inline-start: auto; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: .92rem; font-weight: 500; white-space: nowrap; }
+.nav-links a:hover { color: var(--ink); }
+.nav-end { display: flex; align-items: center; gap: 10px; }
+.lang {
+  font: 600 .88rem var(--body); color: var(--ink); background: transparent; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px;
+}
+.lang:hover { border-color: var(--muted); }
+.pill {
+  display: inline-flex; align-items: center; gap: 8px; text-decoration: none; cursor: pointer; white-space: nowrap;
+  background: var(--ink); color: var(--paper); border-radius: 999px; padding: 8px 16px;
+  font: 600 .9rem var(--body); border: 0;
+}
+@media (max-width: 960px) { .nav-links { display: none; } .nav-end { margin-inline-start: auto; } }
+@media (max-width: 380px) { .nav .wrap { gap: 12px; } .nav .brand-name { display: none; } }
+
+/* ---------- store button ---------- */
+.store {
+  display: inline-flex; align-items: center; gap: 12px; text-decoration: none;
+  background: var(--ink); color: var(--paper); border-radius: 16px; padding: 12px 22px 12px 18px;
+  transition: transform .2s ease;
+}
+.store:hover { transform: translateY(-2px); }
+.store svg { width: 26px; height: 26px; flex: none; }
+.store span { display: grid; text-align: start; line-height: 1.1; }
+.store small { font-size: .74rem; opacity: .75; }
+.store b { font-family: var(--display); font-size: 1.3rem; font-weight: 600; }
+
+/* ---------- phone ---------- */
+.phone {
+  --w: 300px; width: var(--w); max-width: 100%; aspect-ratio: 1320 / 2868; flex: none;
+  border-radius: calc(var(--w) * .155); padding: calc(var(--w) * .03);
+  background: var(--bezel);
+  box-shadow: 0 0 0 1.5px var(--bezel-edge), 0 40px 80px -30px var(--shadow);
+}
+.phone > img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: calc(var(--w) * .127); }
+
+/* ---------- hero ---------- */
+.hero { padding-block: clamp(56px, 8vw, 96px) 0; overflow: hidden; position: relative; }
+.hero::before {
+  content: ""; position: absolute; inset: 38% -10% -10%; z-index: -1;
+  background: radial-gradient(50% 50% at 50% 50%, color-mix(in srgb, var(--violet) 26%, transparent), transparent 70%),
+              radial-gradient(40% 40% at 30% 60%, color-mix(in srgb, var(--spark) 22%, transparent), transparent 70%);
+}
+.chip {
+  display: inline-flex; align-items: center; gap: 8px; font-size: .9rem; font-weight: 500; color: var(--muted);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px 6px 8px; margin-bottom: 28px;
+}
+.chip img { width: 22px; height: 22px; border-radius: 6px; }
+.chip b { color: var(--ink); font-weight: 600; }
+.hero .lede { margin-top: 26px; }
+.cta-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 22px; margin-top: 36px; }
+.cta-note { color: var(--muted); font-size: .95rem; }
+.stage { position: relative; display: flex; justify-content: center; align-items: flex-start; margin-top: 72px; height: clamp(420px, 52vw, 600px); }
+.stage .phone { position: relative; }
+.stage .main { --w: clamp(250px, 27vw, 320px); z-index: 2; }
+.stage .side { --w: clamp(200px, 22vw, 260px); margin-top: 70px; z-index: 1; }
+.stage .side.l { margin-inline-end: -40px; }
+.stage .side.r { margin-inline-start: -40px; }
+.hero-sparky { position: absolute; z-index: 3; top: -46px; inset-inline-start: calc(50% + clamp(90px, 10vw, 130px)); width: clamp(110px, 12vw, 150px); }
+.hero-sparky img { width: 100%; filter: drop-shadow(0 16px 20px var(--shadow)); }
+.bubble-hi {
+  position: absolute; top: 4px; inset-inline-start: 88%; white-space: nowrap;
+  background: var(--surface); color: var(--ink); border: 1px solid var(--line);
+  font: 600 .95rem var(--display); padding: 8px 14px; border-radius: 16px; border-end-start-radius: 4px;
+  box-shadow: 0 10px 30px -12px var(--shadow);
+}
+@media (max-width: 760px) {
+  .stage .side { display: none; }
+  .hero-sparky { inset-inline-start: auto; inset-inline-end: 4px; top: -30px; }
+  .bubble-hi { inset-inline-start: auto; inset-inline-end: 70%; top: -26px; border-end-start-radius: 16px; border-end-end-radius: 4px; }
+}
+
+/* ---------- split rows ---------- */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 90px); align-items: center; }
+.split > * { min-width: 0; }
+.split .visual { display: flex; justify-content: center; gap: 22px; }
+@media (max-width: 900px) { .split { grid-template-columns: 1fr; } .split :is(.visual, .demo) { order: 2; } }
+
+/* ---------- focus ---------- */
+.flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 64px; }
+.step { display: grid; justify-items: center; align-content: start; gap: 18px; text-align: center; min-width: 0; }
+.step .phone { --w: clamp(160px, 19vw, 236px); }
+.step-n { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font: 600 .9rem var(--display);
+  color: var(--spark); background: color-mix(in srgb, var(--spark) 12%, transparent); }
+.step p { color: var(--muted); font-size: .98rem; max-width: 24ch; }
+.step p b { display: block; color: var(--ink); font: 600 1.05rem var(--display); margin-bottom: 2px; }
+@media (max-width: 900px) {
+  .flow { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 18px; margin-inline: -20px; padding: 4px 20px 18px; }
+  .step { flex: 0 0 min(260px, 66vw); scroll-snap-align: center; }
+  .step .phone { --w: min(236px, 60vw); }
+}
+.fbento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: clamp(60px, 8vw, 100px); }
+.ftile { background: var(--surface); border: 1px solid var(--line); border-radius: 28px; padding: 30px; overflow: hidden;
+  display: grid; gap: 8px; align-content: start; min-width: 0; position: relative; }
+.ftile p { color: var(--muted); }
+.ftile.island { grid-column: 1 / 3; background: linear-gradient(160deg, var(--night) 0%, var(--night-2) 100%); border-color: transparent; }
+.ftile.island :is(h3) { color: var(--night-ink); }
+.ftile.island p { color: var(--night-muted); }
+.island-shot { margin-top: 20px; overflow: hidden; border-start-start-radius: 8.6% 19.5%; border-start-end-radius: 8.6% 19.5%;
+  -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
+.ftile.steps { grid-column: 3; grid-row: 1 / 3; }
+.ftile.steps .phone { --w: 270px; margin: 22px auto -140px; }
+.ftile.pause { grid-column: 1 / 3; grid-template-columns: 1fr 1fr; align-items: center; gap: 28px; }
+.ftile.pause > div { display: grid; gap: 8px; min-width: 0; }
+.pause-shot { border-radius: 0 0 34px 34px; overflow: hidden; background: #0B0D16; box-shadow: 0 0 0 1px var(--line); }
+.focus-note { margin-top: 20px; color: var(--muted); font-size: .95rem; text-align: center; }
+@media (max-width: 860px) {
+  .fbento { grid-template-columns: 1fr; }
+  .ftile.island, .ftile.steps, .ftile.pause { grid-column: auto; grid-row: auto; }
+  .ftile.pause { grid-template-columns: 1fr; }
+  .ftile.steps .phone { margin-bottom: -260px; }
+  .ftile.steps { max-height: 560px; }
+}
+
+/* ---------- talk (night band) ---------- */
+.night {
+  background: radial-gradient(60% 40% at 85% 0%, rgba(139, 91, 255, .38), transparent 70%),
+              radial-gradient(50% 35% at 0% 60%, rgba(61, 90, 254, .28), transparent 70%),
+              linear-gradient(180deg, var(--night) 0%, var(--night-2) 70%, var(--night-3) 100%);
+  color: var(--night-ink); color-scheme: dark;
+}
+.night :is(h2, h3) { color: var(--night-ink); }
+.night .lede, .night p { color: var(--night-muted); }
+.night .eyebrow { color: var(--night-accent); }
+.night .new { background: rgba(255, 255, 255, .12); }
+.night .phone { box-shadow: 0 0 0 1.5px #3B3F63, 0 50px 90px -30px rgba(0, 0, 0, .7); }
+.ticks { list-style: none; padding: 0; margin: 4px 0 0; display: grid; gap: 12px; }
+.ticks li { display: flex; gap: 12px; align-items: baseline; color: var(--night-muted); }
+.ticks li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--night-accent); flex: none; transform: translateY(-2px); }
+.free-line { color: var(--night-ink) !important; font-weight: 600; }
+.night .fine-dark { font-size: .84rem; color: rgba(179, 182, 216, .8); border-top: 1px solid rgba(255, 255, 255, .12); padding-top: 16px; margin-top: 6px; }
+.demo { display: grid; justify-items: center; gap: 16px; }
+.demo-meta { display: flex; align-items: center; gap: 12px; font-size: .85rem; color: var(--night-muted); }
+.replay { font: 600 .85rem var(--body); color: var(--night-ink); background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.replay:hover { background: rgba(255, 255, 255, .16); }
+
+/* the Talk to Sparky screen, rebuilt from the app's own layout and colors */
+.vphone { --w: clamp(260px, 30vw, 330px); }
+.vscreen {
+  width: 100%; height: 100%; border-radius: calc(var(--w) * .127); overflow: hidden; position: relative;
+  background: linear-gradient(180deg, #14123A 0%, #221E68 55%, #33289A 100%);
+  display: flex; flex-direction: column; align-items: center; color: #fff;
+  font-size: calc(var(--w) / 24); font-family: -apple-system, "SF Pro Text", var(--body);
+}
+html[lang="ar"] .vscreen { font-family: var(--body); }
+.vstatus { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.1em 1.6em 0; font-size: .82em; font-weight: 600; }
+.vtop { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.1em 1.3em 0; }
+.vpill { display: inline-flex; align-items: center; gap: .45em; height: 2.2em; padding: 0 .9em; border-radius: 999px; background: rgba(255, 255, 255, .12); font-size: .82em; font-weight: 600; }
+.vpill i { width: .5em; height: .5em; border-radius: 50%; background: var(--rec); }
+.vpill i[hidden] { display: none; }
+.vx { width: 2.3em; height: 2.3em; border-radius: 50%; background: rgba(255, 255, 255, .14); display: grid; place-items: center; }
+.vx svg { width: .9em; height: .9em; }
+.orb-wrap { position: relative; width: 11.5em; height: 11.5em; margin-top: 2.6em; flex: none; }
+.orb {
+  position: absolute; inset: 0; border-radius: 50%; overflow: hidden;
+  box-shadow: 0 0 0 .1em rgba(255, 255, 255, .35) inset, 0 0 3em -.4em rgba(139, 91, 255, .75);
+  transition: transform .5s cubic-bezier(.3, 1.3, .5, 1);
+}
+.orb::before {
+  content: ""; position: absolute; inset: -25%;
+  background: conic-gradient(from 20deg, #8B5BFF, #3D5AFE, #FF6BCB, #6A5BFF, #8B5BFF);
+}
+.orb::after {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  background: radial-gradient(44% 22% at 40% 20%, rgba(255, 255, 255, .34), transparent 70%),
+              radial-gradient(70% 70% at 50% 55%, transparent 55%, rgba(20, 18, 58, .35));
+}
+.orb-sparky { position: absolute; width: 52%; left: 24%; top: 22%; filter: drop-shadow(0 .5em .6em rgba(10, 8, 40, .45)); }
+.vcap { min-height: 7.5em; width: 100%; padding: 1.6em 1.4em 0; text-align: center; font-size: 1.05em; line-height: 1.38; font-weight: 500; }
+.vcap .ph { color: rgba(255, 255, 255, .55); font-weight: 400; }
+.vcap .sp { display: inline-block; background: rgba(255, 255, 255, .1); border-radius: 1.1em; padding: .7em .9em; font-weight: 600; }
+.vbtns { margin-top: auto; padding-bottom: 2.4em; display: flex; gap: 1.3em; }
+.vb { width: 3.1em; height: 3.1em; border-radius: 50%; background: rgba(255, 255, 255, .14); display: grid; place-items: center; }
+.vb svg { width: 1.15em; height: 1.15em; }
+.vb.end { background: var(--end); }
+/* motion only while the sample talk plays; nothing loops after it ends */
+@keyframes swirl { to { transform: rotate(360deg); } }
+@keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+.vscreen.listening .orb { animation: breathe 1.4s ease-in-out infinite; }
+.vscreen.listening .orb::before { animation: swirl 9s linear infinite; }
+.vscreen.thinking .orb::before { animation: swirl 3s linear infinite; }
+.vscreen.thinking .orb { transform: scale(.92); }
+.vscreen.speaking .orb { animation: breathe .9s ease-in-out infinite; }
+.vscreen.speaking .orb::before { animation: swirl 6s linear infinite; }
+.vscreen.rest .orb, .vscreen.rest .orb::before { animation: none; }
+
+/* ---------- today ---------- */
+.styles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+.style { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 16px 18px; display: grid; gap: 2px; border-top: 4px solid var(--c); }
+.style b { font-family: var(--display); font-weight: 600; font-size: 1.05rem; }
+.style span { color: var(--muted); font-size: .93rem; }
+.today .visual .phone { --w: clamp(220px, 22vw, 260px); }
+.today .visual .phone:last-child { --w: clamp(184px, 18vw, 220px); margin-top: 80px; }
+@media (max-width: 560px) { .today .visual .phone:last-child { display: none; } }
+.share { margin-top: clamp(70px, 9vw, 120px); }
+.share-strip { margin-top: 32px; border-radius: 24px; overflow: hidden; box-shadow: 0 0 0 1px var(--line), 0 30px 60px -40px var(--shadow); }
+.share-strip img { width: 100%; }
+
+/* ---------- mood ---------- */
+.mood { position: relative; transition: --m .6s ease; }
+.mood::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(70% 55% at 25% 15%, color-mix(in srgb, var(--m) 22%, transparent), transparent 75%);
+}
+.picker { display: flex; flex-wrap: wrap; gap: 10px; }
+.mood-btn {
+  --c: var(--great);
+  display: grid; justify-items: center; gap: 6px; width: 76px; padding: 12px 4px 10px; cursor: pointer;
+  border-radius: 20px; border: 1px solid var(--line); background: var(--surface);
+  font: 600 .85rem var(--body); color: var(--muted); transition: transform .2s ease, background .3s ease, color .3s ease;
+}
+.mood-btn svg { width: 34px; height: 34px; color: var(--c); }
+.mood-btn:hover { transform: translateY(-2px); }
+.mood-btn[aria-checked="true"] { background: var(--c); color: #fff; border-color: transparent; box-shadow: 0 12px 24px -12px var(--c); }
+.mood-btn[aria-checked="true"] svg { color: #fff; }
+.sparky-says { display: flex; align-items: center; gap: 18px; margin-top: 8px; min-height: 150px; }
+.sparky-says img { width: 132px; height: 132px; object-fit: contain; flex: none; filter: drop-shadow(0 14px 18px var(--shadow)); }
+.bubble {
+  position: relative; background: color-mix(in srgb, var(--m) 14%, var(--surface)); border: 1px solid color-mix(in srgb, var(--m) 30%, transparent);
+  border-radius: 22px; padding: 18px 22px; font: 500 1.15rem/1.45 var(--display); color: var(--ink); min-width: 0;
+}
+.bubble small { display: block; font: 600 .78rem var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--m); margin-bottom: 6px; filter: brightness(.85); }
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 70px; }
+.fact { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 22px; }
+.fact b { display: block; font: 600 1.15rem var(--display); margin-bottom: 4px; }
+.fact span { color: var(--muted); font-size: .95rem; }
+@media (max-width: 760px) { .facts { grid-template-columns: 1fr; } }
+
+/* ---------- iOS 27 bento ---------- */
+.bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; margin-top: 56px; }
+.tile {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 28px; padding: 28px;
+  grid-column: span 2; display: grid; align-content: start; gap: 8px; overflow: hidden; min-width: 0;
+}
+.tile.wide { grid-column: span 3; }
+.tile.tall { grid-column: span 3; grid-row: span 2; }
+.tile h3 { font-size: 1.35rem; }
+.tile p { color: var(--muted); font-size: .98rem; }
+.ic { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 8px;
+  background: color-mix(in srgb, var(--spark) 12%, transparent); color: var(--spark); }
+.ic svg { width: 22px; height: 22px; }
+.tile.tall .phone { margin: 24px auto -160px; --w: 270px; }
+.quote-siri { font: 500 1.05rem/1.4 var(--display); color: var(--ink) !important; }
+@media (max-width: 860px) { .bento { grid-template-columns: 1fr 1fr; } .tile, .tile.wide, .tile.tall { grid-column: span 2; } .tile.tall { grid-row: auto; } }
+
+/* ---------- bilingual ---------- */
+.duo { display: flex; justify-content: center; gap: clamp(16px, 4vw, 48px); margin-top: 60px; }
+.duo figure { margin: 0; display: grid; justify-items: center; gap: 16px; }
+.duo .phone { --w: clamp(150px, 26vw, 290px); }
+.duo figcaption { font: 600 1rem var(--display); color: var(--muted); }
+
+/* ---------- privacy ---------- */
+.privacy { background: var(--surface); border-block: 1px solid var(--line); }
+.big { font-family: var(--display); font-weight: 700; font-size: clamp(2.6rem, 8vw, 6.2rem); line-height: 1.02; letter-spacing: -.035em; }
+.big span { display: block; }
+.big span:nth-child(2) { color: var(--muted); }
+.privacy .lede { margin-top: 32px; max-width: 50ch; }
+.privacy .more { display: inline-block; margin-top: 22px; font-weight: 600; text-decoration: none; }
+.privacy .more:hover { text-decoration: underline; }
+
+/* ---------- plus ---------- */
+.perks { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 34px; max-width: 900px; margin-inline: auto; }
+.perks span { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-size: .95rem; font-weight: 500; }
+.free-note { margin-top: 22px; color: var(--muted); }
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 50px; align-items: stretch; }
+.plan { background: var(--surface); border: 1px solid var(--line); border-radius: 26px; padding: 28px; display: grid; gap: 6px; align-content: start; position: relative; }
+.plan.best { border: 2px solid var(--spark); box-shadow: 0 30px 60px -36px var(--spark); }
+.plan .name { font: 600 1rem var(--display); color: var(--muted); }
+.plan .price { font: 700 2.4rem/1.1 var(--display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.plan .price small { font-size: 1rem; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+.plan .sub { color: var(--muted); font-size: .95rem; }
+.badge { position: absolute; top: -13px; inset-inline-start: 24px; background: var(--spark); color: #fff; font: 600 .8rem var(--body); padding: 5px 12px; border-radius: 999px; }
+.fine { color: var(--muted); font-size: .82rem; max-width: 70ch; margin: 28px auto 0; text-align: center; }
+@media (max-width: 760px) { .plans { grid-template-columns: 1fr; } }
+
+/* ---------- final ---------- */
+.final { padding-bottom: 60px; }
+.final img { width: clamp(160px, 20vw, 220px); margin: 0 auto 10px; filter: drop-shadow(0 20px 26px var(--shadow)); }
+.final .cta-row { margin-top: 30px; }
+
+/* ---------- footer ---------- */
+footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var(--muted); font-size: .92rem; }
+.foot { display: grid; grid-template-columns: 1.3fr 1fr; gap: 30px; }
+.foot > * { min-width: 0; }
+.support { display: grid; gap: 10px; }
+.email-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.email { font: 600 1rem var(--body); color: var(--ink); user-select: all; word-break: break-all; }
+.copy { font: 600 .82rem var(--body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
+.links { display: flex; flex-wrap: wrap; gap: 10px 22px; align-content: start; justify-content: flex-end; }
+.links a { color: var(--muted); text-decoration: none; }
+.links a:hover { color: var(--ink); }
+.legal { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; border-top: 1px solid var(--line); padding-top: 22px; font-size: .84rem; }
+@media (max-width: 760px) { .foot { grid-template-columns: 1fr; } .links { justify-content: flex-start; } }
+
+/* ---------- motion: one load sequence, gentle rises on scroll ---------- */
+@keyframes rise { from { transform: translateY(60px); } to { transform: none; } }
+@keyframes pop { 0% { transform: scale(.6) rotate(-12deg); } 60% { transform: scale(1.06) rotate(6deg); } 100% { transform: none; } }
+.hero .main { animation: rise 1s cubic-bezier(.2, .8, .2, 1) both; }
+.hero .side { animation: rise 1.1s .12s cubic-bezier(.2, .8, .2, 1) both; }
+.hero-sparky { animation: pop .9s .5s cubic-bezier(.3, 1.4, .5, 1) both; }
+.js .reveal { transition: transform .9s cubic-bezier(.2, .8, .2, 1); }
+.js .reveal.below { transform: translateY(48px); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .js .reveal.below { transform: none; }
+  html { scroll-behavior: auto; }
+}
 </style>
+<link rel="icon" type="image/png" href="img/icon.png">
+<link rel="apple-touch-icon" href="img/icon.png">
+<meta name="apple-itunes-app" content="app-id=6817912073">
+<meta name="theme-color" content="#F4F6FB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#090B16" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MoodSpark: Focus, feel inspired, understand your mood">
+<meta property="og:description" content="Focus with Sparky, talk your day through out loud, and get a daily quote made for your style. English and Arabic.">
+<meta property="og:url" content="https://aelkahwagy.github.io/moodspark/">
+<meta property="og:image" content="https://aelkahwagy.github.io/moodspark/img/share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<style>[hidden] { display: none !important; }</style>
 </head>
 <body>
-<div class="wrap">
-  <h1>MoodSpark</h1>
-  <p class="tag">A 2-minute quiz finds your motivational style — then one quote, one mood check-in, and one tiny challenge, made for you every day.</p>
+<!-- shared SVG symbols -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path fill="currentColor" d="M13.2 2.5 5.6 13.1c-.4.6 0 1.4.8 1.4h4.4l-1.2 6.9c-.1.6.7.9 1 .4l7.6-10.6c.4-.6 0-1.4-.8-1.4H13l1.2-6.9c.1-.6-.7-.9-1-.4Z"/></symbol>
+    <symbol id="m-great" viewBox="0 0 32 32"><circle cx="16" cy="16" r="6.5" fill="currentColor"/><path d="M16 3v3M16 26v3M3 16h3M26 16h3M6.8 6.8l2.1 2.1M23.1 23.1l2.1 2.1M6.8 25.2l2.1-2.1M23.1 8.9l2.1-2.1" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></symbol>
+    <symbol id="m-good" viewBox="0 0 32 32"><circle cx="19.5" cy="12" r="6.5" fill="currentColor"/><path d="M19.5 1.5v1.8M30 12h-1.8M27 4.5l-1.3 1.3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path fill="currentColor" opacity=".5" d="M7 28h11a4.5 4.5 0 0 0 .4-9 6 6 0 0 0-11.3 1.6A3.8 3.8 0 0 0 7 28Z"/></symbol>
+    <symbol id="m-okay" viewBox="0 0 32 32"><circle cx="21" cy="11" r="6" fill="currentColor" opacity=".4"/><path fill="currentColor" d="M8 26h13a5 5 0 0 0 .4-10 7 7 0 0 0-13.2 1.8A4.2 4.2 0 0 0 8 26Z"/></symbol>
+    <symbol id="m-low" viewBox="0 0 32 32"><path fill="currentColor" opacity=".45" d="M14 17h12a4.4 4.4 0 0 0 .4-8.8 6 6 0 0 0-11.4 1.5A3.7 3.7 0 0 0 14 17Z"/><path fill="currentColor" d="M5 27h13a5 5 0 0 0 .4-10 7 7 0 0 0-13.2 1.8A4.2 4.2 0 0 0 5 27Z"/></symbol>
+    <symbol id="m-stressed" viewBox="0 0 32 32"><path fill="currentColor" d="M8 20h13a5 5 0 0 0 .4-10 7 7 0 0 0-13.2 1.8A4.2 4.2 0 0 0 8 20Z"/><path d="M11 24l-1.5 3.5M16 24l-1.5 3.5M21 24l-1.5 3.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
 
-  <div class="card"><h2>🔒 Private by design</h2>
-    <p>No account. No tracking. No servers. Your moods never leave your device — and can be saved to Apple Health as State of Mind entries, under your control. <a href="privacy.html">Privacy policy</a></p></div>
-  <div class="card"><h2>⚡ Built for iOS 27</h2>
-    <p>Interactive widgets, Control Center check-ins, Siri App Intents, full Arabic support, and VoiceOver throughout.</p></div>
-  <div class="card"><h2>💬 Support</h2>
-    <p>Questions or feedback? Email <a href="mailto:aelkahwagydeveloper@gmail.com">aelkahwagydeveloper@gmail.com</a> — we read everything.</p></div>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="img/icon.png" alt=""><span class="brand-name">MoodSpark</span></a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#focus" data-i18n="nav.focus">Focus</a>
+      <a href="#talk" data-i18n="nav.talk">Talk to Sparky</a>
+      <a href="#today" data-i18n="nav.today">Daily spark</a>
+      <a href="#mood" data-i18n="nav.mood">Mood</a>
+      <a href="#privacy" data-i18n="nav.privacy">Privacy</a>
+      <a href="#plus">Plus</a>
+    </nav>
+    <div class="nav-end">
+      <button class="lang" id="lang-toggle" type="button" lang="ar">العربية</button>
+      <a class="pill" href="https://apps.apple.com/app/id6817912073" data-i18n="nav.get">Download</a>
+    </div>
+  </div>
+</header>
 
-  <footer>© 2026 MoodSpark · <a href="privacy.html">Privacy</a></footer>
-</div>
+<main id="top">
+  <!-- HERO -->
+  <section class="hero center">
+    <div class="wrap">
+      <span class="chip"><img src="img/icon.png" alt=""><span data-i18n="hero.chip"><b>New in MoodSpark 1.1</b> · Focus and Talk to Sparky</span></span>
+      <h1 data-i18n="hero.h1">Focus. <span class="grad">Feel inspired.</span> Understand your mood.</h1>
+      <p class="lede" data-i18n="hero.lede">Finish one thing at a time, find a little spark every day and talk your day through, with Sparky by your side.</p>
+      <div class="cta-row">
+        <a class="store" href="https://apps.apple.com/app/id6817912073">
+          <svg aria-hidden="true"><use href="#i-bolt"/></svg>
+          <span><small data-i18n="cta.small">Download on the</small><b>App Store</b></span>
+        </a>
+        <span class="cta-note" data-i18n="hero.note">Free to download. Plus starts with a 7-day free trial.</span>
+      </div>
+      <div class="stage">
+        <div class="phone side l"><img src="img/en-1-home.jpg" data-ar="img/ar-1-home.jpg" alt="Today screen with the daily quote and a 12-day streak" data-i18n-alt="alt.today"></div>
+        <div class="phone main"><img src="img/f-run-en.jpg" data-ar="img/f-run-ar.jpg" alt="Focus session counting down from 17:45 with Sparky in the ring" data-i18n-alt="alt.run"></div>
+        <div class="phone side r"><img src="img/talk.jpg" data-ar="img/ar-talk.jpg" alt="Mood check-in with Sparky and the Want to tell me about it? button" data-i18n-alt="alt.checkin"></div>
+        <div class="hero-sparky">
+          <img src="img/sparky-wave.png" alt="Sparky, the MoodSpark mascot, waving" data-i18n-alt="alt.sparky">
+          <span class="bubble-hi" data-i18n="hero.hi">Hi, I'm Sparky!</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOCUS -->
+  <section id="focus">
+    <div class="wrap">
+      <div class="center reveal">
+        <span class="eyebrow"><span data-i18n="focus.eyebrow">Focus</span><span class="new" data-i18n="new">New</span></span>
+        <h2 data-i18n="focus.h2">Finish one thing, distraction-free.</h2>
+        <p class="lede" data-i18n="focus.lede" style="margin-top:22px">Pick a task, set the dial and start. Sparky guards your time, then cheers when you're done.</p>
+      </div>
+
+      <ol class="flow reveal" style="list-style:none;padding-inline-start:0" aria-label="How a focus session works" data-i18n-aria="focus.flow">
+        <li class="step">
+          <div class="phone"><img src="img/f-setup-en.jpg" data-ar="img/f-setup-ar.jpg" alt="Focus setup: today's challenge, a 25-minute dial and Start focus" data-i18n-alt="alt.setup" loading="lazy"></div>
+          <span class="step-n">1</span>
+          <p data-i18n="step.1"><b>Set the dial</b>Pick today's challenge or write your own task.</p>
+        </li>
+        <li class="step">
+          <div class="phone"><img src="img/f-run-en.jpg" data-ar="img/f-run-ar.jpg" alt="The ring counts back while Sparky stays calm" data-i18n-alt="alt.run" loading="lazy"></div>
+          <span class="step-n">2</span>
+          <p data-i18n="step.2"><b>Stay with it</b>The ring counts back while Sparky keeps you company.</p>
+        </li>
+        <li class="step">
+          <div class="phone"><img src="img/f-up-en.jpg" data-ar="img/f-up-ar.jpg" alt="Time's up: Yes, I finished, 5 more minutes, or Save it for tomorrow" data-i18n-alt="alt.up" loading="lazy"></div>
+          <span class="step-n">3</span>
+          <p data-i18n="step.3"><b>Time's up, kindly</b>Finish it, take 5 more minutes or save it for tomorrow.</p>
+        </li>
+        <li class="step">
+          <div class="phone"><img src="img/f-done-en.jpg" data-ar="img/f-done-ar.jpg" alt="Task done: Sparky celebrates 25 minutes of focus" data-i18n-alt="alt.done" loading="lazy"></div>
+          <span class="step-n">4</span>
+          <p data-i18n="step.4"><b>Celebrate</b>Sparky cheers, then asks how you feel now.</p>
+        </li>
+      </ol>
+
+      <div class="fbento">
+        <div class="ftile island reveal">
+          <h3 data-i18n="ft.island.h">On your Lock Screen and in the Dynamic Island.</h3>
+          <p data-i18n="ft.island.p">Your countdown stays in view, with +5 minutes and Done one tap away.</p>
+          <div class="island-shot"><img src="img/f-island-top.jpg" alt="Dynamic Island showing a focus countdown with +5 min and Done buttons" data-i18n-alt="alt.island" loading="lazy"></div>
+        </div>
+        <div class="ftile steps reveal">
+          <h3 data-i18n="ft.steps.h">Tiny steps.</h3>
+          <p data-i18n="ft.steps.p">A big task? Sparky breaks it into tiny steps you can tick off as you go.</p>
+          <div class="phone"><img src="img/f-steps-en.jpg" data-ar="img/f-steps-ar.jpg" alt="A focus session with three tiny steps under the timer" data-i18n-alt="alt.steps" loading="lazy"></div>
+        </div>
+        <div class="ftile pause reveal" data-pause>
+          <div>
+            <h3><span data-i18n="ft.pause.h">Pause distracting apps.</span><span class="plus-tag">Plus</span></h3>
+            <p data-i18n="ft.pause.p">Choose the apps that pull you away. They stay paused until your task is done, then they're free again.</p>
+          </div>
+          <div class="pause-shot"><img src="img/f-pause-en.jpg" data-ar="img/f-pause-ar.jpg" alt="The Pause apps switch turned on for 3 apps, above Start focus" data-i18n-alt="alt.pause" loading="lazy"></div>
+        </div>
+      </div>
+      <p class="focus-note" data-pause data-i18n="focus.note">The Focus timer is free. Pausing apps is part of MoodSpark Plus.</p>
+    </div>
+  </section>
+
+  <!-- TALK TO SPARKY -->
+  <section class="night" id="talk">
+    <div class="wrap split">
+      <div class="demo reveal">
+        <div class="phone vphone">
+          <div class="vscreen" id="vscreen" role="img" aria-label="Sample Talk to Sparky conversation" data-i18n-aria="alt.voice">
+            <div class="vstatus" dir="ltr"><span>9:41</span><svg viewBox="0 0 46 12" style="width:3.1em;height:.85em" aria-hidden="true"><g fill="#fff"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="4.5" y="6" width="3" height="6" rx=".8"/><rect x="9" y="3.5" width="3" height="8.5" rx=".8"/><rect x="13.5" y="1" width="3" height="11" rx=".8"/></g><rect x="22" y="1" width="20" height="10" rx="3" fill="none" stroke="#fff" stroke-opacity=".5"/><rect x="24" y="3" width="14" height="6" rx="1.5" fill="#fff"/><rect x="43" y="4" width="1.6" height="4" rx=".8" fill="#fff" fill-opacity=".5"/></svg></div>
+            <div class="vtop">
+              <span class="vpill"><i id="v-dot"></i><span id="v-status">Listening</span></span>
+              <span class="vx"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2l8 8M10 2 2 10" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+            </div>
+            <div class="orb-wrap">
+              <div class="orb"></div>
+              <img class="orb-sparky" id="v-pose" src="img/sparky-calm.png" alt="">
+            </div>
+            <div class="vcap" id="v-cap"><span class="ph">Go ahead, I'm listening…</span></div>
+            <div class="vbtns" dir="ltr">
+              <span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#fff"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/></svg></span>
+              <span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2.5" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M6 10h1M9.5 10h1M13 10h1M16.5 10h1M7.5 14h9" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+              <span class="vb end"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+            </div>
+          </div>
+        </div>
+        <div class="demo-meta">
+          <span data-i18n="demo.label">Sample conversation</span>
+          <button type="button" class="replay" id="replay" data-i18n="demo.replay">Play again</button>
+        </div>
+      </div>
+      <div class="stack reveal">
+        <span class="eyebrow"><span data-i18n="talk.eyebrow">Talk to Sparky</span><span class="new" data-i18n="new">New</span></span>
+        <h2 data-i18n="talk.h2">Talk your day through.</h2>
+        <p class="lede" data-i18n="talk.lede">Tell Sparky about your day out loud, no typing. He listens, answers kindly and can save it as today's note.</p>
+        <ul class="ticks">
+          <li data-i18n="talk.1">Start from your mood check-in, the Mood tab or the evening prompt.</li>
+          <li data-i18n="talk.2">Prefer to type? Switch to the keyboard anytime.</li>
+          <li data-i18n="talk.3">When you're done, save it as today's note and pick how the day felt.</li>
+          <li data-i18n="talk.4">It runs on your iPhone with Apple Intelligence, so your words stay private.</li>
+        </ul>
+        <p class="free-line" data-i18n="talk.free">One talk a day is free. Plus makes it unlimited.</p>
+        <p class="fine-dark" data-i18n="talk.fine">Sparky's replies need an iPhone with Apple Intelligence. On other iPhones, he keeps your words as a note. Sparky is a friendly companion, not a crisis service. If you need help, he shows you where to find it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAILY SPARK -->
+  <section class="today" id="today">
+    <div class="wrap">
+      <div class="split">
+        <div class="stack reveal">
+          <span class="eyebrow" data-i18n="today.eyebrow">Your daily spark</span>
+          <h2 data-i18n="today.h2">A quote that gets you.</h2>
+          <p class="lede" data-i18n="today.lede">Pick your style in seconds, or take the 2-minute quiz. Every quote, challenge and color is then matched to you.</p>
+          <div class="styles">
+            <div class="style" style="--c:#3D5AFE"><b data-i18n="s.ach">The Achiever</b><span data-i18n="s.ach2">Driven to make it happen</span></div>
+            <div class="style" style="--c:#9B5BFF"><b data-i18n="s.dre">The Dreamer</b><span data-i18n="s.dre2">Inspired to imagine more</span></div>
+            <div class="style" style="--c:#0FB5A6"><b data-i18n="s.thi">The Thinker</b><span data-i18n="s.thi2">Focused on clarity</span></div>
+            <div class="style" style="--c:#FF8A3D"><b data-i18n="s.con">The Connector</b><span data-i18n="s.con2">Powered by people</span></div>
+          </div>
+        </div>
+        <div class="visual reveal">
+          <div class="phone"><img src="img/talk-evening.jpg" data-ar="img/ar-1-home.jpg" alt="Today screen with a Sun Tzu quote, a 12-day streak and the How was your day? card" data-i18n-alt="alt.today" loading="lazy"></div>
+          <div class="phone"><img src="img/en-5-results.jpg" data-ar="img/ar-5-results.jpg" alt="Your motivational style: The Achiever, with strengths" data-i18n-alt="alt.result" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="share reveal">
+        <div class="center">
+          <span class="eyebrow"><span data-i18n="share.eyebrow">Share your spark</span><span class="new" data-i18n="new">New</span></span>
+          <h3 data-i18n="share.h">16 designs to share your quote.</h3>
+          <p class="lede" data-i18n="share.p" style="margin-top:12px">Sized for Stories and posts. 4 are free, and Plus unlocks them all.</p>
+        </div>
+        <div class="share-strip"><img src="img/share.jpg" alt="Sixteen share card designs for a daily quote" data-i18n-alt="alt.share" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOOD -->
+  <section class="mood" id="mood">
+    <div class="wrap">
+      <div class="split">
+        <div class="stack reveal">
+          <span class="eyebrow" data-i18n="mood.eyebrow">Mood check-in</span>
+          <h2 data-i18n="mood.h2">How's your inner weather?</h2>
+          <p class="lede" data-i18n="mood.lede">Check in with one tap. The screen takes on your mood's color and Sparky answers in his own bubble. Try it:</p>
+          <div class="picker" role="radiogroup" aria-label="Pick a mood" data-i18n-aria="mood.pick">
+            <button type="button" class="mood-btn" role="radio" aria-checked="true" data-mood="great" style="--c:var(--great)"><svg aria-hidden="true"><use href="#m-great"/></svg><span data-i18n="m.great">Great</span></button>
+            <button type="button" class="mood-btn" role="radio" aria-checked="false" data-mood="good" style="--c:var(--good)"><svg aria-hidden="true"><use href="#m-good"/></svg><span data-i18n="m.good">Good</span></button>
+            <button type="button" class="mood-btn" role="radio" aria-checked="false" data-mood="okay" style="--c:var(--okay)"><svg aria-hidden="true"><use href="#m-okay"/></svg><span data-i18n="m.okay">Okay</span></button>
+            <button type="button" class="mood-btn" role="radio" aria-checked="false" data-mood="low" style="--c:var(--low)"><svg aria-hidden="true"><use href="#m-low"/></svg><span data-i18n="m.low">Low</span></button>
+            <button type="button" class="mood-btn" role="radio" aria-checked="false" data-mood="stressed" style="--c:var(--stressed)"><svg aria-hidden="true"><use href="#m-stressed"/></svg><span data-i18n="m.stressed">Stressed</span></button>
+          </div>
+          <div class="sparky-says">
+            <img id="sparky-pose" src="img/sparky-celebrate.png" alt="Sparky celebrating">
+            <p class="bubble" aria-live="polite"><small data-i18n="mood.sparky">Sparky</small><span id="sparky-line">Love that energy. Carry it forward today.</span></p>
+          </div>
+        </div>
+        <div class="visual reveal">
+          <div class="phone"><img src="img/talk.jpg" data-ar="img/ar-talk.jpg" alt="Mood check-in glowing orange for Great, with Sparky's reply" data-i18n-alt="alt.checkin" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="facts reveal">
+        <div class="fact"><b data-i18n="f.1">Your month in color</b><span data-i18n="f.1b">A 35-day mood map shows your weeks at a glance.</span></div>
+        <div class="fact"><b data-i18n="f.2">Streaks that feel good</b><span data-i18n="f.2b">Daily streaks with milestones and gentle reminders in Sparky's voice.</span></div>
+        <div class="fact"><b data-i18n="f.3">Sparky's weekly insight</b><span data-i18n="f.3b">With Plus, Sparky spots the patterns in your week, right on your iPhone.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- iOS 27 -->
+  <section id="ios" style="padding-top:0">
+    <div class="wrap">
+      <div class="center reveal">
+        <span class="eyebrow" data-i18n="ios.eyebrow">Built for iOS 27</span>
+        <h2 data-i18n="ios.h2">Check in without opening the app.</h2>
+      </div>
+      <div class="bento">
+        <div class="tile tall reveal">
+          <h3 data-i18n="t.w">Home Screen widgets</h3>
+          <p data-i18n="t.wb">Log your mood with one tap and read today's quote right from your Home Screen.</p>
+          <div class="phone"><img src="img/en-8-widgets.jpg" data-ar="img/ar-8-widgets.jpg" alt="Daily Spark and Mood Check-In widgets" data-i18n-alt="alt.widgets" loading="lazy"></div>
+        </div>
+        <div class="tile wide reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h2M7 8v8M11 4v16M15 8v8M19 10v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg></div>
+          <h3 data-i18n="t.s">Siri and Shortcuts</h3>
+          <p class="quote-siri" data-i18n="t.sb">“Log my mood in MoodSpark.” “What's my quote today?”</p>
+        </div>
+        <div class="tile wide reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 4v16" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2 2"/></svg></div>
+          <h3>iPhone Duo</h3>
+          <p data-i18n="t.db">Two columns on the inner display, and folding or unfolding keeps your place.</p>
+        </div>
+        <div class="tile reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 20.5s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.9c0 5.4-7.5 10-7.5 10Z"/></svg></div>
+          <h3 data-i18n="t.h">Apple Health</h3>
+          <p data-i18n="t.hb">Save check-ins as State of Mind. Opt-in and write-only.</p>
+        </div>
+        <div class="tile reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="10" rx="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="16" cy="12" r="3" fill="currentColor"/></svg></div>
+          <h3 data-i18n="t.c">Control Center</h3>
+          <p data-i18n="t.cb">Add Log Mood to Control Center or the Action button.</p>
+        </div>
+        <div class="tile reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.5" r="2" fill="currentColor"/><path d="M5 8.5c2.3.7 4.6 1 7 1s4.7-.3 7-1M12 9.5v5m0 0-3 6m3-6 3 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+          <h3 data-i18n="t.a">Accessibility</h3>
+          <p data-i18n="t.ab">VoiceOver, Larger Text, Dark Interface and Reduce Motion.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BILINGUAL -->
+  <section id="arabic" style="padding-top:0">
+    <div class="wrap center reveal">
+      <span class="eyebrow" data-i18n="bi.eyebrow">English and Arabic</span>
+      <h2 data-i18n="bi.h2">Fully in English and <span lang="ar">العربية</span>.</h2>
+      <p class="lede" data-i18n="bi.lede" style="margin-top:22px">Every quote, widget, Focus session and Siri phrase in both languages, with a true right-to-left layout. Switch anytime in Settings.</p>
+      <div class="duo" dir="ltr">
+        <figure><div class="phone"><img src="img/f-setup-en.jpg" alt="Focus setup in English" loading="lazy"></div><figcaption>English</figcaption></figure>
+        <figure><div class="phone"><img src="img/f-setup-ar.jpg" alt="Focus setup in Arabic" loading="lazy"></div><figcaption lang="ar">العربية</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACY -->
+  <section class="privacy" id="privacy">
+    <div class="wrap reveal">
+      <span class="eyebrow" data-i18n="p.eyebrow">Privacy</span>
+      <p class="big" data-i18n="p.big"><span>No account.</span><span>No ads.</span><span class="grad">No tracking.</span></p>
+      <p class="lede" data-i18n="p.lede">Your moods, notes and conversations stay on your iPhone. Talk to Sparky runs on your device with Apple Intelligence. The only data that leaves your phone is what the App Store needs to manage a Plus purchase, and it isn't linked to you.</p>
+      <a class="more" href="https://aelkahwagy.github.io/moodspark/privacy.html" data-i18n="p.link">Read the privacy policy →</a>
+    </div>
+  </section>
+
+  <!-- PLUS -->
+  <section id="plus">
+    <div class="wrap">
+      <div class="center reveal">
+        <span class="eyebrow">MoodSpark Plus</span>
+        <h2 data-i18n="plus.h2">Free every day. Plus when you want more.</h2>
+        <div class="perks">
+          <span data-pause data-i18n="plus.0">Pause distracting apps during Focus</span>
+          <span data-i18n="plus.1">Unlimited talks with Sparky</span>
+          <span data-i18n="plus.2">Sparky's weekly mood insight</span>
+          <span data-i18n="plus.3">All 16 share designs</span>
+          <span data-i18n="plus.4">The full quote archive, any day</span>
+          <span data-i18n="plus.5">Unlimited favorites</span>
+          <span data-i18n="plus.6">Every future Plus feature</span>
+        </div>
+        <p class="free-note" data-i18n="plus.free">Always free: your daily quote, mood check-ins, the Focus timer and one talk with Sparky a day.</p>
+      </div>
+      <div class="plans reveal">
+        <div class="plan best">
+          <span class="badge" data-i18n="plan.trial">7 days free</span>
+          <span class="name" data-i18n="plan.y">Yearly</span>
+          <span class="price">$29.99 <small data-i18n="plan.yr">/ year</small></span>
+          <span class="sub" data-i18n="plan.ysub">About $2.50 a month after your free week.</span>
+        </div>
+        <div class="plan">
+          <span class="name" data-i18n="plan.m">Monthly</span>
+          <span class="price">$4.99 <small data-i18n="plan.mo">/ month</small></span>
+          <span class="sub" data-i18n="plan.msub">Cancel anytime.</span>
+        </div>
+        <div class="plan">
+          <span class="name" data-i18n="plan.l">Lifetime</span>
+          <span class="price">$79.99 <small data-i18n="plan.once">once</small></span>
+          <span class="sub" data-i18n="plan.lsub">One payment. Yours forever.</span>
+        </div>
+      </div>
+      <p class="fine" data-i18n="plan.fine">US prices shown. The App Store shows the price for your country. Subscriptions renew automatically unless cancelled at least 24 hours before the end of the current period. Manage or cancel anytime in your Apple Account settings.</p>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final center">
+    <div class="wrap reveal">
+      <img src="img/sparky-celebrate.png" alt="" loading="lazy">
+      <h2 data-i18n="final.h2">Give your day its spark.</h2>
+      <p class="lede" data-i18n="final.lede" style="margin-top:14px">Sparky's waiting.</p>
+      <div class="cta-row">
+        <a class="store" href="https://apps.apple.com/app/id6817912073">
+          <svg aria-hidden="true"><use href="#i-bolt"/></svg>
+          <span><small data-i18n="cta.small">Download on the</small><b>App Store</b></span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="support">
+      <a class="brand" href="#top"><img src="img/icon.png" alt="">MoodSpark</a>
+      <span data-i18n="foot.q">Questions or feedback? We read every email.</span>
+      <div class="email-row">
+        <span class="email" id="email">aelkahwagydeveloper@gmail.com</span>
+        <button class="copy" id="copy" type="button" data-i18n="foot.copy">Copy</button>
+      </div>
+    </div>
+    <nav class="links" aria-label="Footer">
+      <a href="https://aelkahwagy.github.io/moodspark/privacy.html" data-i18n="foot.privacy">Privacy Policy</a>
+      <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" data-i18n="foot.terms">Terms of Use</a>
+      <a href="https://www.instagram.com/moodspark.app/">Instagram</a>
+      <a href="https://www.tiktok.com/@moodsparkapp">TikTok</a>
+    </nav>
+    <div class="legal">
+      <span data-i18n="foot.med">For inspiration and self-reflection only. Not medical advice or a psychological assessment.</span>
+      <span>© 2026 MoodSpark</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+  // Flip to false if Apple hasn't approved Family Controls by launch: hides every app-pausing claim.
+  var APP_PAUSING = true;
+  if (!APP_PAUSING) root.classList.add('no-pause');
+
+  var MOODS = {
+    great:    { pose: 'celebrate', en: 'Love that energy. Carry it forward today.', ar: 'طاقة رائعة! انطلق بها اليوم.' },
+    good:     { pose: 'proud',     en: 'Nice. Keep that momentum going.',            ar: 'جميل. حافظ على هذا الزخم.' },
+    okay:     { pose: 'calm',      en: 'Steady is good. One small step is enough.',  ar: 'الثبات جيد. خطوة صغيرة تكفي.' },
+    low:      { pose: 'comfort',   en: 'Be gentle with yourself today.',             ar: 'كن لطيفًا مع نفسك اليوم.' },
+    stressed: { pose: 'heart',     en: 'Take a breath. You have handled hard days before.', ar: 'خذ نفسًا عميقًا. لقد تجاوزت أيامًا صعبة من قبل.' }
+  };
+
+  var VOICE = {
+    en: { listening: 'Listening', placeholder: "Go ahead, I'm listening…", thinking: 'Sparky is thinking…', talking: 'Sparky is talking',
+          you: "Today was a lot. I finished the report, but I'm really tired.",
+          sparky: "Finishing that report took real effort. Rest counts too. Want me to save this as today's note?" },
+    ar: { listening: 'يستمع', placeholder: 'تفضّل، أنا أستمع…', thinking: 'سباركي يفكّر…', talking: 'سباركي يتحدث',
+          you: 'كان يومي مزدحمًا. أنهيت التقرير، لكني متعب جدًا.',
+          sparky: 'إنهاء التقرير احتاج جهدًا حقيقيًا، والراحة إنجاز أيضًا. هل أحفظ هذا كملاحظة اليوم؟' }
+  };
+
+  var AR = {
+    'nav.focus': 'التركيز', 'nav.talk': 'تحدّث مع سباركي', 'nav.today': 'شرارتك اليومية', 'nav.mood': 'المزاج', 'nav.privacy': 'الخصوصية', 'nav.get': 'حمّل التطبيق',
+    'new': 'جديد',
+    'hero.chip': '<b>جديد في MoodSpark 1.1</b> · التركيز والتحدث مع سباركي',
+    'hero.h1': 'ركّز. <span class="grad">استلهم.</span> افهم مزاجك.',
+    'hero.lede': 'أنجز أمرًا واحدًا في كل مرة، وابحث عن شرارة صغيرة كل يوم، واحكِ يومك بصوتك، وسباركي بجانبك.',
+    'cta.small': 'حمّله من',
+    'hero.note': 'التحميل مجاني، وPlus يبدأ بتجربة مجانية لمدة 7 أيام.',
+    'hero.hi': 'مرحبًا، أنا سباركي!',
+    'focus.eyebrow': 'تركيز',
+    'focus.h2': 'أنجز أمرًا واحدًا بلا مشتّتات.',
+    'focus.lede': 'اختر مهمة، واضبط المؤقت، وابدأ. سباركي يحرس وقتك، ثم يحتفل معك عندما تنتهي.',
+    'focus.flow': 'كيف تعمل جلسة التركيز',
+    'step.1': '<b>اضبط المؤقت</b>اختر تحدي اليوم أو اكتب مهمتك الخاصة.',
+    'step.2': '<b>ابقَ معها</b>الحلقة تعدّ تنازليًا وسباركي يرافقك.',
+    'step.3': '<b>انتهى الوقت، بلطف</b>أنهِها، أو خذ ٥ دقائق أخرى، أو احفظها للغد.',
+    'step.4': '<b>احتفل</b>سباركي يحتفل، ثم يسألك كيف تشعر الآن.',
+    'ft.island.h': 'على شاشة القفل وفي Dynamic Island.',
+    'ft.island.p': 'يبقى العدّ التنازلي أمامك، و«+٥ دقائق» و«تم» على بُعد لمسة.',
+    'ft.steps.h': 'خطوات صغيرة.',
+    'ft.steps.p': 'مهمة كبيرة؟ سباركي يقسّمها إلى خطوات صغيرة تنجزها واحدة تلو الأخرى.',
+    'ft.pause.h': 'أوقف التطبيقات المشتتة.',
+    'ft.pause.p': 'اختر التطبيقات التي تشتتك، وستبقى متوقفة حتى تنهي مهمتك، ثم تعود متاحة من جديد.',
+    'focus.note': 'مؤقت التركيز مجاني، وإيقاف التطبيقات جزء من MoodSpark Plus.',
+    'talk.eyebrow': 'تحدّث مع سباركي',
+    'talk.h2': 'احكِ يومك بصوتك.',
+    'talk.lede': 'احكِ لسباركي عن يومك بصوتك، بلا كتابة. يستمع إليك ويرد بلطف ويمكنه حفظ حديثك كملاحظة اليوم.',
+    'talk.1': 'ابدأ من تسجيل مزاجك، أو تبويب المزاج، أو تذكير المساء.',
+    'talk.2': 'تفضّل الكتابة؟ انتقل إلى لوحة المفاتيح متى شئت.',
+    'talk.3': 'وعندما تنتهي، احفظ حديثك كملاحظة اليوم واختر كيف كان شعورك.',
+    'talk.4': 'يعمل على جهازك بتقنية Apple Intelligence، فتبقى كلماتك خاصة بك.',
+    'talk.free': 'حديث واحد يوميًا مجاني، وPlus يجعل الأحاديث بلا حدود.',
+    'talk.fine': 'تحتاج ردود سباركي إلى iPhone يدعم Apple Intelligence، وعلى الأجهزة الأخرى يحفظ كلماتك كملاحظة. سباركي رفيق لطيف وليس خدمة طوارئ، وإذا احتجت إلى مساعدة يرشدك إلى من يمكنه مساعدتك.',
+    'demo.label': 'محادثة توضيحية', 'demo.replay': 'شاهدها مرة أخرى',
+    'today.eyebrow': 'شرارتك اليومية',
+    'today.h2': 'اقتباس يفهمك.',
+    'today.lede': 'اختر أسلوبك في ثوانٍ، أو خذ الاختبار في دقيقتين، ثم يتناسب كل اقتباس وتحدٍّ ولون معك.',
+    's.ach': 'المنجز', 's.ach2': 'مدفوع لتحقيق الأمور',
+    's.dre': 'الحالم', 's.dre2': 'ملهَم لتخيّل المزيد',
+    's.thi': 'المفكر', 's.thi2': 'مركّز على الوضوح',
+    's.con': 'الواصل', 's.con2': 'طاقته من الناس',
+    'share.eyebrow': 'شارك شرارتك',
+    'share.h': '١٦ تصميمًا لمشاركة اقتباسك.',
+    'share.p': 'بمقاس القصص والمنشورات. ٤ مجانية، وكلها مع Plus.',
+    'mood.eyebrow': 'تسجيل المزاج',
+    'mood.h2': 'كيف حال مزاجك اليوم؟',
+    'mood.lede': 'سجّل شعورك بلمسة واحدة. تتلوّن الشاشة بلون مزاجك، ويرد عليك سباركي في فقاعته. جرّبه:',
+    'mood.sparky': 'سباركي',
+    'm.great': 'رائع', 'm.good': 'جيد', 'm.okay': 'عادي', 'm.low': 'منخفض', 'm.stressed': 'متوتر',
+    'f.1': 'شهرك بالألوان', 'f.1b': 'خريطة مزاج لـ35 يومًا ترى بها أسابيعك في لمحة.',
+    'f.2': 'سلاسل تشعرك بالإنجاز', 'f.2b': 'سلاسل يومية مع إنجازات، وتذكيرات لطيفة بصوت سباركي.',
+    'f.3': 'رؤية سباركي الأسبوعية', 'f.3b': 'مع Plus، يلتقط سباركي الأنماط في أسبوعك، على جهازك مباشرة.',
+    'ios.eyebrow': 'مصمم لـ iOS 27',
+    'ios.h2': 'سجّل مزاجك دون أن تفتح التطبيق.',
+    't.w': 'أدوات الشاشة الرئيسية', 't.wb': 'سجّل مزاجك بلمسة واقرأ اقتباس اليوم من شاشتك الرئيسية مباشرة.',
+    't.s': 'سيري والاختصارات', 't.sb': '«سجّل مزاجي في MoodSpark»',
+    't.db': 'عمودان على الشاشة الداخلية، والطيّ أو الفتح يحفظ مكانك.',
+    't.h': 'تطبيق «صحتي»', 't.hb': 'احفظ تسجيلاتك كحالة ذهنية. اختياري وللكتابة فقط.',
+    't.c': 'مركز التحكم', 't.cb': 'أضف «تسجيل المزاج» إلى مركز التحكم أو زر الإجراء.',
+    't.a': 'تسهيلات الاستخدام', 't.ab': 'VoiceOver والنص الأكبر والواجهة الداكنة وتقليل الحركة.',
+    'bi.eyebrow': 'العربية والإنجليزية',
+    'bi.h2': 'بالعربية والإنجليزية بالكامل.',
+    'bi.lede': 'كل اقتباس وأداة وجلسة تركيز وعبارة سيري باللغتين، مع تصميم كامل من اليمين إلى اليسار. بدّل بينهما متى شئت من الإعدادات.',
+    'p.eyebrow': 'الخصوصية',
+    'p.big': '<span>بلا حساب.</span><span>بلا إعلانات.</span><span class="grad">بلا تتبع.</span>',
+    'p.lede': 'مزاجك وملاحظاتك وأحاديثك تبقى على جهازك، والتحدث مع سباركي يعمل على جهازك بتقنية Apple Intelligence. البيانات الوحيدة التي تغادر هاتفك هي ما يحتاجه App Store لإدارة اشتراك Plus، وهي غير مرتبطة بك.',
+    'p.link': 'اقرأ سياسة الخصوصية ←',
+    'plus.h2': 'مجاني كل يوم. وPlus عندما تريد المزيد.',
+    'plus.0': 'إيقاف التطبيقات المشتتة أثناء التركيز', 'plus.1': 'أحاديث بلا حدود مع سباركي', 'plus.2': 'رؤية سباركي الأسبوعية لمزاجك',
+    'plus.3': 'كل تصاميم المشاركة الـ١٦', 'plus.4': 'أرشيف الاقتباسات الكامل في أي يوم', 'plus.5': 'مفضلات بلا حدود', 'plus.6': 'كل ميزات Plus القادمة',
+    'plus.free': 'مجاني دائمًا: اقتباسك اليومي، وتسجيل المزاج، ومؤقت التركيز، وحديث واحد مع سباركي يوميًا.',
+    'plan.trial': '7 أيام مجانًا', 'plan.y': 'سنوي', 'plan.yr': '/ سنة', 'plan.ysub': 'حوالي 2.50$ شهريًا بعد أسبوعك المجاني.',
+    'plan.m': 'شهري', 'plan.mo': '/ شهر', 'plan.msub': 'ألغِ في أي وقت.',
+    'plan.l': 'مدى الحياة', 'plan.once': 'مرة واحدة', 'plan.lsub': 'دفعة واحدة، لك إلى الأبد.',
+    'plan.fine': 'الأسعار المعروضة بالدولار الأمريكي، ويعرض App Store السعر الخاص ببلدك. تتجدد الاشتراكات تلقائيًا ما لم تُلغَ قبل 24 ساعة على الأقل من نهاية الفترة الحالية. يمكنك إدارة اشتراكك أو إلغاؤه في أي وقت من إعدادات حساب Apple.',
+    'final.h2': 'أشعل يومك.', 'final.lede': 'سباركي بانتظارك.',
+    'foot.q': 'أسئلة أو ملاحظات؟ نقرأ كل رسالة.', 'foot.copy': 'نسخ', 'foot.copied': 'تم النسخ',
+    'foot.privacy': 'سياسة الخصوصية', 'foot.terms': 'شروط الاستخدام',
+    'foot.med': 'للإلهام والتأمل الذاتي فقط، وليس نصيحة طبية أو تقييمًا نفسيًا.',
+    'alt.today': 'شاشة اليوم مع اقتباس اليوم', 'alt.run': 'جلسة تركيز تعدّ تنازليًا وسباركي في الحلقة', 'alt.checkin': 'تسجيل المزاج مع رد سباركي',
+    'alt.sparky': 'سباركي يلوّح', 'alt.setup': 'إعداد جلسة التركيز: تحدي اليوم ومؤقت ٢٥ دقيقة', 'alt.up': 'انتهى الوقت: نعم أنهيتها، أو ٥ دقائق أخرى، أو احفظها للغد',
+    'alt.done': 'أُنجزت المهمة: سباركي يحتفل بـ٢٥ دقيقة من التركيز', 'alt.island': 'Dynamic Island يعرض العدّ التنازلي مع زرّي +٥ دقائق وتم',
+    'alt.steps': 'جلسة تركيز مع ثلاث خطوات صغيرة', 'alt.pause': 'مفتاح إيقاف التطبيقات مؤقتًا مفعّل لثلاثة تطبيقات',
+    'alt.voice': 'محادثة توضيحية مع سباركي', 'alt.result': 'أسلوبك التحفيزي: المنجز', 'alt.widgets': 'أدوات الشاشة الرئيسية', 'alt.share': 'تصاميم مشاركة الاقتباس',
+    'mood.pick': 'اختر مزاجًا'
+  };
+
+  var EN = {};
+  var lang = 'en';
+  var current = 'great';
+  var textEls = document.querySelectorAll('[data-i18n]');
+  var altEls = document.querySelectorAll('[data-i18n-alt]');
+  var ariaEls = document.querySelectorAll('[data-i18n-aria]');
+  var swapImgs = document.querySelectorAll('img[data-ar]');
+  textEls.forEach(function (el) { EN[el.dataset.i18n] = el.innerHTML; });
+  altEls.forEach(function (el) { EN[el.dataset.i18nAlt] = el.alt; });
+  ariaEls.forEach(function (el) { EN[el.dataset.i18nAria] = el.getAttribute('aria-label'); });
+  swapImgs.forEach(function (img) { img.dataset.en = img.getAttribute('src'); });
+
+  function t(key) { return lang === 'ar' && AR[key] != null ? AR[key] : EN[key]; }
+
+  function setLang(next) {
+    lang = next;
+    root.lang = next;
+    root.dir = next === 'ar' ? 'rtl' : 'ltr';
+    textEls.forEach(function (el) { el.innerHTML = t(el.dataset.i18n); });
+    altEls.forEach(function (el) { el.alt = t(el.dataset.i18nAlt); });
+    ariaEls.forEach(function (el) { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
+    swapImgs.forEach(function (img) { img.src = next === 'ar' ? img.dataset.ar : img.dataset.en; });
+    var btn = document.getElementById('lang-toggle');
+    btn.textContent = next === 'ar' ? 'English' : 'العربية';
+    btn.lang = next === 'ar' ? 'en' : 'ar';
+    setMood(current);
+    voiceLang();
+    try { localStorage.setItem('ms-lang', next); } catch (e) {}
+  }
+
+  /* ---------- mood picker ---------- */
+  var section = document.querySelector('.mood');
+  var pose = document.getElementById('sparky-pose');
+  var line = document.getElementById('sparky-line');
+  var buttons = document.querySelectorAll('.mood-btn');
+  ['celebrate', 'proud', 'calm', 'comfort', 'heart', 'thinking', 'base'].forEach(function (p) { var i = new Image(); i.src = 'img/sparky-' + p + '.png'; });
+
+  function setMood(id) {
+    current = id;
+    var m = MOODS[id];
+    section.style.setProperty('--m', 'var(--' + id + ')');
+    pose.src = 'img/sparky-' + m.pose + '.png';
+    pose.alt = lang === 'ar' ? 'سباركي' : 'Sparky';
+    line.textContent = m[lang];
+    buttons.forEach(function (b) {
+      var on = b.dataset.mood === id;
+      b.setAttribute('aria-checked', on ? 'true' : 'false');
+      b.tabIndex = on ? 0 : -1;
+    });
+  }
+  buttons.forEach(function (b, i) {
+    b.addEventListener('click', function () { setMood(b.dataset.mood); });
+    b.addEventListener('keydown', function (e) {
+      var dir = root.dir === 'rtl' ? -1 : 1;
+      var step = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? dir : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -dir : 0;
+      if (!step) return;
+      e.preventDefault();
+      var n = buttons[(i + step + buttons.length) % buttons.length];
+      setMood(n.dataset.mood); n.focus();
+    });
+  });
+
+  /* ---------- Talk to Sparky sample conversation (plays once in view, then rests) ---------- */
+  var screen = document.getElementById('vscreen');
+  var vStatus = document.getElementById('v-status');
+  var vDot = document.getElementById('v-dot');
+  var vCap = document.getElementById('v-cap');
+  var vPose = document.getElementById('v-pose');
+  var timers = [];
+  var played = false;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+  function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+  function phase(name, statusKey, poseName) {
+    screen.className = 'vscreen ' + name;
+    vStatus.textContent = VOICE[lang][statusKey];
+    vDot.hidden = name !== 'listening';
+    vPose.src = 'img/sparky-' + poseName + '.png';
+  }
+  function caption(html) { vCap.innerHTML = html; }
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+  function typeOut(text, cls, startMs, stepMs) {
+    var words = text.split(' ');
+    words.forEach(function (_, i) {
+      at(startMs + i * stepMs, function () { caption('<span class="' + cls + '">' + esc(words.slice(0, i + 1).join(' ')) + '</span>'); });
+    });
+    return startMs + words.length * stepMs;
+  }
+  function restState() {
+    clearTimers();
+    phase('rest', 'talking', 'base');
+    caption('<span class="sp">' + esc(VOICE[lang].sparky) + '</span>');
+  }
+  function idleState() {
+    phase('rest', 'listening', 'calm');
+    vDot.hidden = false;
+    caption('<span class="ph">' + esc(VOICE[lang].placeholder) + '</span>');
+  }
+  function play() {
+    if (reduce) { restState(); return; }
+    clearTimers();
+    played = true;
+    var v = VOICE[lang];
+    phase('listening', 'listening', 'calm');
+    caption('<span class="ph">' + esc(v.placeholder) + '</span>');
+    var end = typeOut(v.you, 'you', 900, 190);
+    at(end + 700, function () { phase('thinking', 'thinking', 'thinking'); });
+    var talkAt = end + 2100;
+    at(talkAt, function () { phase('speaking', 'talking', 'base'); caption(''); });
+    var said = typeOut(v.sparky, 'sp', talkAt + 150, 150);
+    at(said + 900, function () { screen.className = 'vscreen rest'; });
+  }
+  function voiceLang() { if (played) restState(); else idleState(); }
+  document.getElementById('replay').addEventListener('click', play);
+  if ('IntersectionObserver' in window) {
+    var vio = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting && !played) { play(); vio.disconnect(); }
+    }, { threshold: 0.5 });
+    vio.observe(screen);
+  }
+
+  document.getElementById('lang-toggle').addEventListener('click', function () { setLang(lang === 'ar' ? 'en' : 'ar'); });
+
+  /* ---------- copy support email ---------- */
+  var copyBtn = document.getElementById('copy');
+  copyBtn.addEventListener('click', function () {
+    var email = document.getElementById('email').textContent;
+    var done = function () { copyBtn.textContent = lang === 'ar' ? AR['foot.copied'] : 'Copied'; setTimeout(function () { copyBtn.textContent = t('foot.copy'); }, 1800); };
+    var fallback = function () { var r = document.createRange(); r.selectNodeContents(document.getElementById('email')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+    try { navigator.clipboard.writeText(email).then(done, fallback); } catch (e) { fallback(); }
+  });
+
+  /* ---------- gentle rise for sections below the fold; content is never hidden ---------- */
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.remove('below'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      if (el.getBoundingClientRect().top > innerHeight) { el.classList.add('below'); io.observe(el); }
+    });
+  }
+
+  /* ---------- start in Arabic for #ar links, a saved choice, or an Arabic browser ---------- */
+  var saved = null;
+  try { saved = localStorage.getItem('ms-lang'); } catch (e) {}
+  var start = location.hash === '#ar' ? 'ar' : saved || ((navigator.language || '').toLowerCase().indexOf('ar') === 0 ? 'ar' : 'en');
+  setMood('great');
+  idleState();
+  if (start === 'ar') setLang('ar');
+})();
+</script>
 </body>
 </html>
