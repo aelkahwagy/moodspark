@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>try { if (localStorage.getItem('ms-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark'); } catch (e) {}</script>
 <title>MoodSpark: Focus &amp; Mood for iPhone</title>
 <meta name="description" content="MoodSpark 1.1: Focus with Sparky, talk your day through out loud, a daily quote made for your style and a one-tap mood check-in. English and Arabic. Made for iOS 27.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,13 +34,6 @@
   --display: "Readex Pro", "IBM Plex Sans Arabic", system-ui, sans-serif;
   --body: "Figtree", "IBM Plex Sans Arabic", -apple-system, system-ui, sans-serif;
   --m: var(--great);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #090B16; --surface: #131728; --ink: #F3F5FF; --muted: #9BA3BA;
-    --line: rgba(255, 255, 255, .09); --spark: #7088FF; --violet: #A880FF;
-    --shadow: rgba(0, 0, 0, .6); --bezel-edge: #3A3F50; color-scheme: dark;
-  }
 }
 :root[data-theme="dark"] {
   --paper: #090B16; --surface: #131728; --ink: #F3F5FF; --muted: #9BA3BA;
@@ -113,19 +107,24 @@ p { margin: 0; text-wrap: pretty; }
   font: 600 .9rem var(--body); border: 0;
 }
 @media (max-width: 960px) { .nav-links { display: none; } .nav-end { margin-inline-start: auto; } }
-@media (max-width: 380px) { .nav .wrap { gap: 12px; } .nav .brand-name { display: none; } }
+@media (max-width: 430px) { .nav .wrap { gap: 10px; } .nav-end { gap: 8px; } .nav .brand-name { display: none; } }
 
-/* ---------- store button ---------- */
-.store {
-  display: inline-flex; align-items: center; gap: 12px; text-decoration: none;
-  background: var(--ink); color: var(--paper); border-radius: 16px; padding: 12px 22px 12px 18px;
-  transition: transform .2s ease;
-}
-.store:hover { transform: translateY(-2px); }
-.store svg { width: 26px; height: 26px; flex: none; }
-.store span { display: grid; text-align: start; line-height: 1.1; }
-.store small { font-size: .74rem; opacity: .75; }
-.store b { font-family: var(--display); font-size: 1.3rem; font-weight: 600; }
+/* ---------- official App Store badge (black on light, white on dark) ---------- */
+.badge-link { display: inline-block; line-height: 0; border-radius: 12px; transition: transform .2s ease; }
+.badge-link:hover { transform: translateY(-2px); }
+.badge-link img { height: 56px; width: auto; }
+.badge-link .on-dark { display: none; }
+:root[data-theme="dark"] .badge-link .on-light { display: none; }
+:root[data-theme="dark"] .badge-link .on-dark { display: block; }
+
+/* ---------- theme switch ---------- */
+.theme { width: 38px; height: 38px; display: grid; place-items: center; cursor: pointer; color: var(--ink);
+  background: transparent; border: 1px solid var(--line); border-radius: 50%; }
+.theme:hover { border-color: var(--muted); }
+.theme svg { width: 18px; height: 18px; }
+.theme .sun { display: none; }
+:root[data-theme="dark"] .theme .sun { display: block; }
+:root[data-theme="dark"] .theme .moon { display: none; }
 
 /* ---------- phone ---------- */
 .phone {
@@ -152,7 +151,7 @@ p { margin: 0; text-wrap: pretty; }
 .hero .lede { margin-top: 26px; }
 .cta-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 22px; margin-top: 36px; }
 .cta-note { color: var(--muted); font-size: .95rem; }
-.stage { position: relative; display: flex; justify-content: center; align-items: flex-start; margin-top: 72px; height: clamp(420px, 52vw, 600px); }
+.stage { position: relative; display: flex; justify-content: center; align-items: flex-start; margin-top: 72px; padding-bottom: clamp(48px, 7vw, 90px); }
 .stage .phone { position: relative; }
 .stage .main { --w: clamp(250px, 27vw, 320px); z-index: 2; }
 .stage .side { --w: clamp(200px, 22vw, 260px); margin-top: 70px; z-index: 1; }
@@ -412,8 +411,7 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
 <link rel="icon" type="image/png" href="img/icon.png">
 <link rel="apple-touch-icon" href="img/icon.png">
 <meta name="apple-itunes-app" content="app-id=6817912073">
-<meta name="theme-color" content="#F4F6FB" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#090B16" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F6FB">
 <meta property="og:type" content="website">
 <meta property="og:title" content="MoodSpark: Focus, feel inspired, understand your mood">
 <meta property="og:description" content="Focus with Sparky, talk your day through out loud, and get a daily quote made for your style. English and Arabic.">
@@ -426,7 +424,6 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
 <!-- shared SVG symbols -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <symbol id="i-bolt" viewBox="0 0 24 24"><path fill="currentColor" d="M13.2 2.5 5.6 13.1c-.4.6 0 1.4.8 1.4h4.4l-1.2 6.9c-.1.6.7.9 1 .4l7.6-10.6c.4-.6 0-1.4-.8-1.4H13l1.2-6.9c.1-.6-.7-.9-1-.4Z"/></symbol>
     <symbol id="m-great" viewBox="0 0 32 32"><circle cx="16" cy="16" r="6.5" fill="currentColor"/><path d="M16 3v3M16 26v3M3 16h3M26 16h3M6.8 6.8l2.1 2.1M23.1 23.1l2.1 2.1M6.8 25.2l2.1-2.1M23.1 8.9l2.1-2.1" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></symbol>
     <symbol id="m-good" viewBox="0 0 32 32"><circle cx="19.5" cy="12" r="6.5" fill="currentColor"/><path d="M19.5 1.5v1.8M30 12h-1.8M27 4.5l-1.3 1.3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path fill="currentColor" opacity=".5" d="M7 28h11a4.5 4.5 0 0 0 .4-9 6 6 0 0 0-11.3 1.6A3.8 3.8 0 0 0 7 28Z"/></symbol>
     <symbol id="m-okay" viewBox="0 0 32 32"><circle cx="21" cy="11" r="6" fill="currentColor" opacity=".4"/><path fill="currentColor" d="M8 26h13a5 5 0 0 0 .4-10 7 7 0 0 0-13.2 1.8A4.2 4.2 0 0 0 8 26Z"/></symbol>
@@ -447,6 +444,10 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
       <a href="#plus">Plus</a>
     </nav>
     <div class="nav-end">
+      <button class="theme" id="theme-toggle" type="button" aria-pressed="false" aria-label="Dark mode" data-i18n-aria="theme">
+        <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1Z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
       <button class="lang" id="lang-toggle" type="button" lang="ar">العربية</button>
       <a class="pill" href="https://apps.apple.com/app/id6817912073" data-i18n="nav.get">Download</a>
     </div>
@@ -461,9 +462,9 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
       <h1 data-i18n="hero.h1">Focus. <span class="grad">Feel inspired.</span> Understand your mood.</h1>
       <p class="lede" data-i18n="hero.lede">Finish one thing at a time, find a little spark every day and talk your day through, with Sparky by your side.</p>
       <div class="cta-row">
-        <a class="store" href="https://apps.apple.com/app/id6817912073">
-          <svg aria-hidden="true"><use href="#i-bolt"/></svg>
-          <span><small data-i18n="cta.small">Download on the</small><b>App Store</b></span>
+        <a class="badge-link" href="https://apps.apple.com/app/id6817912073">
+          <img class="on-light" src="img/badge-black.svg" alt="Download on the App Store" data-i18n-alt="alt.badge" width="168" height="56">
+          <img class="on-dark" src="img/badge-white.svg" alt="Download on the App Store" data-i18n-alt="alt.badge" width="168" height="56">
         </a>
         <span class="cta-note" data-i18n="hero.note">Free to download. Plus starts with a 7-day free trial.</span>
       </div>
@@ -752,9 +753,9 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
       <h2 data-i18n="final.h2">Give your day its spark.</h2>
       <p class="lede" data-i18n="final.lede" style="margin-top:14px">Sparky's waiting.</p>
       <div class="cta-row">
-        <a class="store" href="https://apps.apple.com/app/id6817912073">
-          <svg aria-hidden="true"><use href="#i-bolt"/></svg>
-          <span><small data-i18n="cta.small">Download on the</small><b>App Store</b></span>
+        <a class="badge-link" href="https://apps.apple.com/app/id6817912073">
+          <img class="on-light" src="img/badge-black.svg" alt="Download on the App Store" data-i18n-alt="alt.badge" width="168" height="56">
+          <img class="on-dark" src="img/badge-white.svg" alt="Download on the App Store" data-i18n-alt="alt.badge" width="168" height="56">
         </a>
       </div>
     </div>
@@ -788,6 +789,18 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
 (function () {
   var root = document.documentElement;
   root.classList.add('js');
+
+  /* ---------- light by default; the visitor can switch, and the choice is remembered ---------- */
+  var themeBtn = document.getElementById('theme-toggle');
+  function setTheme(mode, remember) {
+    root.setAttribute('data-theme', mode);
+    themeBtn.setAttribute('aria-pressed', mode === 'dark' ? 'true' : 'false');
+    if (remember) { try { localStorage.setItem('ms-theme', mode); } catch (e) {} }
+  }
+  var savedTheme = null;
+  try { savedTheme = localStorage.getItem('ms-theme'); } catch (e) {}
+  setTheme(savedTheme === 'dark' ? 'dark' : 'light', false);
+  themeBtn.addEventListener('click', function () { setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true); });
   // Flip to false if Apple hasn't approved Family Controls by launch: hides every app-pausing claim.
   var APP_PAUSING = true;
   if (!APP_PAUSING) root.classList.add('no-pause');
@@ -815,7 +828,7 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
     'hero.chip': '<b>جديد في MoodSpark 1.1</b> · التركيز والتحدث مع سباركي',
     'hero.h1': 'ركّز. <span class="grad">استلهم.</span> افهم مزاجك.',
     'hero.lede': 'أنجز أمرًا واحدًا في كل مرة، وابحث عن شرارة صغيرة كل يوم، واحكِ يومك بصوتك، وسباركي بجانبك.',
-    'cta.small': 'حمّله من',
+    'alt.badge': 'حمّله من App Store', 'theme': 'الوضع الداكن',
     'hero.note': 'التحميل مجاني، وPlus يبدأ بتجربة مجانية لمدة 7 أيام.',
     'hero.hi': 'مرحبًا، أنا سباركي!',
     'focus.eyebrow': 'تركيز',
