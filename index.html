@@ -82,6 +82,13 @@ p { margin: 0; text-wrap: pretty; }
 .plus-tag { display: inline-block; vertical-align: middle; margin-inline-start: 8px; font: 600 .75rem var(--body); color: #fff;
   background: linear-gradient(100deg, #3D5AFE, #8B5BFF); padding: 3px 10px; border-radius: 999px; letter-spacing: .02em; }
 
+/* ---------- World Mental Health Day event bar (auto-hides after Oct 16) ---------- */
+.event-bar { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 12px; padding: 9px 16px;
+  background: linear-gradient(90deg, #2B2A8C, #3D5AFE 55%, #0FB5A6); color: #fff; text-decoration: none; font-size: .9rem; text-align: center; }
+.event-bar b { font-weight: 700; }
+.event-dot { width: 8px; height: 8px; border-radius: 50%; background: #7CF5D4; flex: none; }
+.event-go { font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
 /* ---------- nav ---------- */
 .nav {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
@@ -197,9 +204,9 @@ p { margin: 0; text-wrap: pretty; }
 .ftile.island { grid-column: 1 / 3; background: linear-gradient(160deg, var(--night) 0%, var(--night-2) 100%); border-color: transparent; }
 .ftile.island :is(h3) { color: var(--night-ink); }
 .ftile.island p { color: var(--night-muted); }
-.island-shot { margin-top: 20px; overflow: hidden; border-start-start-radius: 8.6% 19.5%; border-start-end-radius: 8.6% 19.5%;
-  -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
+.island-shot { margin-top: 20px; overflow: hidden; border-radius: 24px; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .6); }
 .ftile.steps { grid-column: 3; grid-row: 1 / 3; }
+.no-pause .ftile.steps { grid-row: auto; }
 .ftile.steps .phone { --w: 270px; margin: 22px auto -140px; }
 .ftile.pause { grid-column: 1 / 3; grid-template-columns: 1fr 1fr; align-items: center; gap: 28px; }
 .ftile.pause > div { display: grid; gap: 8px; min-width: 0; }
@@ -260,7 +267,10 @@ html[lang="ar"] .vscreen { font-family: var(--body); }
 }
 .orb::before {
   content: ""; position: absolute; inset: -25%;
-  background: conic-gradient(from 20deg, #8B5BFF, #3D5AFE, #FF6BCB, #6A5BFF, #8B5BFF);
+  background: radial-gradient(45% 45% at 30% 30%, #9C86FF, transparent 70%),
+              radial-gradient(40% 40% at 78% 48%, #FF8FB8, transparent 70%),
+              radial-gradient(50% 45% at 48% 88%, #FFB443, transparent 70%),
+              conic-gradient(from 20deg, #8B6BFF, #B86BFF, #FF8FB8, #FFB443, #8B6BFF);
 }
 .orb::after {
   content: ""; position: absolute; inset: 0; border-radius: 50%;
@@ -350,6 +360,8 @@ html[lang="ar"] .vscreen { font-family: var(--body); }
 .duo figure { margin: 0; display: grid; justify-items: center; gap: 16px; }
 .duo .phone { --w: clamp(150px, 26vw, 290px); }
 .duo figcaption { font: 600 1rem var(--display); color: var(--muted); }
+.langs { list-style: none; padding: 0; margin: 28px auto 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 760px; }
+.langs li { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 7px 15px; font-size: .95rem; font-weight: 500; }
 
 /* ---------- privacy ---------- */
 .privacy { background: var(--surface); border-block: 1px solid var(--line); }
@@ -387,6 +399,7 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
 .support { display: grid; gap: 10px; }
 .email-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .email { font: 600 1rem var(--body); color: var(--ink); user-select: all; word-break: break-all; }
+.email-sm { font-size: .92rem; }
 .copy { font: 600 .82rem var(--body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
 .links { display: flex; flex-wrap: wrap; gap: 10px 22px; align-content: start; justify-content: flex-end; }
 .links a { color: var(--muted); text-decoration: none; }
@@ -433,6 +446,11 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
   </defs>
 </svg>
 
+<a class="event-bar" id="event-bar" href="https://apps.apple.com/app/id6817912073?eventid=6819228688" hidden>
+  <span class="event-dot" aria-hidden="true"></span>
+  <span data-i18n="event.text"><b>World Mental Health Day:</b> join “7 Days of Checking In”, Oct 10–16</span>
+  <span class="event-go" data-i18n="event.go">Open in the App Store →</span>
+</a>
 <header class="nav">
   <div class="wrap">
     <a class="brand" href="#top"><img src="img/icon.png" alt=""><span class="brand-name">MoodSpark</span></a>
@@ -459,7 +477,7 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
   <!-- HERO -->
   <section class="hero center">
     <div class="wrap">
-      <span class="chip"><img src="img/icon.png" alt=""><span data-i18n="hero.chip"><b>New in MoodSpark 1.1</b> · Focus and Talk to Sparky</span></span>
+      <span class="chip"><img src="img/icon.png" alt=""><span data-i18n="hero.chip"><b>New in MoodSpark 1.1</b> · Focus, Talk to Sparky and 8 new languages</span></span>
       <h1 data-i18n="hero.h1">Focus. <span class="grad">Feel inspired.</span> Understand your mood.</h1>
       <p class="lede" data-i18n="hero.lede">Finish one thing at a time, find a little spark every day and talk your day through, with Sparky by your side.</p>
       <div class="cta-row">
@@ -470,9 +488,9 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
         <span class="cta-note" data-i18n="hero.note">Free to download. Plus starts with a 7-day free trial.</span>
       </div>
       <div class="stage">
-        <div class="phone side l"><img src="img/en-1-home.jpg" data-ar="img/ar-1-home.jpg" alt="Today screen with the daily quote and a 12-day streak" data-i18n-alt="alt.today"></div>
-        <div class="phone main"><img src="img/f-run-en.jpg" data-ar="img/f-run-ar.jpg" alt="Focus session counting down from 17:45 with Sparky in the ring" data-i18n-alt="alt.run"></div>
-        <div class="phone side r"><img src="img/talk.jpg" data-ar="img/ar-talk.jpg" alt="Mood check-in with Sparky and the Want to tell me about it? button" data-i18n-alt="alt.checkin"></div>
+        <div class="phone side l"><img src="img/c-en-today.jpg" data-ar="img/c-ar-today.jpg" alt="Today screen with the daily quote and a 12-day streak" data-i18n-alt="alt.today"></div>
+        <div class="phone main"><img src="img/c-en-focus-run.jpg" data-ar="img/c-ar-focus-run.jpg" alt="Focus session counting down from 17:45 with Sparky in the ring" data-i18n-alt="alt.run"></div>
+        <div class="phone side r"><img src="img/c-en-mood.jpg" data-ar="img/c-ar-mood.jpg" alt="Mood check-in with Sparky and the Want to tell me about it? button" data-i18n-alt="alt.checkin"></div>
         <div class="hero-sparky">
           <img src="img/sparky-wave.png" alt="Sparky, the MoodSpark mascot, waving" data-i18n-alt="alt.sparky">
           <span class="bubble-hi" data-i18n="hero.hi">Hi, I'm Sparky!</span>
@@ -487,17 +505,17 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
       <div class="center reveal">
         <span class="eyebrow"><span data-i18n="focus.eyebrow">Focus</span><span class="new" data-i18n="new">New</span></span>
         <h2 data-i18n="focus.h2">Finish one thing, distraction-free.</h2>
-        <p class="lede" data-i18n="focus.lede" style="margin-top:22px">Pick a task, set the dial and start. Sparky guards your time, then cheers when you're done.</p>
+        <p class="lede" data-i18n="focus.lede" style="margin-top:22px">Pick a task, set the dial and start. Sparky keeps time for you, then cheers when you're done.</p>
       </div>
 
       <ol class="flow reveal" style="list-style:none;padding-inline-start:0" aria-label="How a focus session works" data-i18n-aria="focus.flow">
         <li class="step">
-          <div class="phone"><img src="img/f-setup-en.jpg" data-ar="img/f-setup-ar.jpg" alt="Focus setup: today's challenge, a 25-minute dial and Start focus" data-i18n-alt="alt.setup" loading="lazy"></div>
+          <div class="phone"><img src="img/c-en-focus-setup.jpg" data-ar="img/c-ar-focus-setup.jpg" alt="Focus setup: today's challenge, a 25-minute dial and Start focus" data-i18n-alt="alt.setup" loading="lazy"></div>
           <span class="step-n">1</span>
           <p data-i18n="step.1"><b>Set the dial</b>Pick today's challenge or write your own task.</p>
         </li>
         <li class="step">
-          <div class="phone"><img src="img/f-run-en.jpg" data-ar="img/f-run-ar.jpg" alt="The ring counts back while Sparky stays calm" data-i18n-alt="alt.run" loading="lazy"></div>
+          <div class="phone"><img src="img/c-en-focus-run.jpg" data-ar="img/c-ar-focus-run.jpg" alt="The ring counts back while Sparky stays calm" data-i18n-alt="alt.run" loading="lazy"></div>
           <span class="step-n">2</span>
           <p data-i18n="step.2"><b>Stay with it</b>The ring counts back while Sparky keeps you company.</p>
         </li>
@@ -507,7 +525,7 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
           <p data-i18n="step.3"><b>Time's up, kindly</b>Finish it, take 5 more minutes or save it for tomorrow.</p>
         </li>
         <li class="step">
-          <div class="phone"><img src="img/f-done-en.jpg" data-ar="img/f-done-ar.jpg" alt="Task done: Sparky celebrates 25 minutes of focus" data-i18n-alt="alt.done" loading="lazy"></div>
+          <div class="phone"><img src="img/c-en-focus-done.jpg" data-ar="img/c-ar-focus-done.jpg" alt="Task done: Sparky celebrates 25 minutes of focus" data-i18n-alt="alt.done" loading="lazy"></div>
           <span class="step-n">4</span>
           <p data-i18n="step.4"><b>Celebrate</b>Sparky cheers, then asks how you feel now.</p>
         </li>
@@ -517,12 +535,12 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
         <div class="ftile island reveal">
           <h3 data-i18n="ft.island.h">On your Lock Screen and in the Dynamic Island.</h3>
           <p data-i18n="ft.island.p">Your countdown stays in view, with +5 minutes and Done one tap away.</p>
-          <div class="island-shot"><img src="img/f-island-top.jpg" alt="Dynamic Island showing a focus countdown with +5 min and Done buttons" data-i18n-alt="alt.island" loading="lazy"></div>
+          <div class="island-shot"><img src="img/c-en-lock.jpg" data-ar="img/c-ar-lock.jpg" alt="Lock Screen Live Activity showing a focus countdown with +5 min and Done buttons" data-i18n-alt="alt.island" loading="lazy"></div>
         </div>
         <div class="ftile steps reveal">
           <h3 data-i18n="ft.steps.h">Tiny steps.</h3>
           <p data-i18n="ft.steps.p">A big task? Sparky breaks it into tiny steps you can tick off as you go.</p>
-          <div class="phone"><img src="img/f-steps-en.jpg" data-ar="img/f-steps-ar.jpg" alt="A focus session with three tiny steps under the timer" data-i18n-alt="alt.steps" loading="lazy"></div>
+          <div class="phone"><img src="img/c-en-focus-steps.jpg" data-ar="img/c-ar-focus-steps.jpg" alt="A focus session with three tiny steps under the timer" data-i18n-alt="alt.steps" loading="lazy"></div>
         </div>
         <div class="ftile pause reveal" data-pause>
           <div>
@@ -552,10 +570,10 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
               <img class="orb-sparky" id="v-pose" src="img/sparky-calm.png" alt="">
             </div>
             <div class="vcap" id="v-cap"><span class="ph">Go ahead, I'm listening…</span></div>
-            <div class="vbtns" dir="ltr">
+            <div class="vbtns">
               <span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="#fff"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/></svg></span>
               <span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2.5" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M6 10h1M9.5 10h1M13 10h1M16.5 10h1M7.5 14h9" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-              <span class="vb end"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+              <span class="vb end"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M3.3 14.2c-.6-.6-.6-1.6 0-2.2 4.8-4.4 12.6-4.4 17.4 0 .6.6.6 1.6 0 2.2l-1.6 1.5c-.5.5-1.3.5-1.8.1l-1.9-1.4c-.4-.3-.6-.7-.6-1.2v-1.6a10 10 0 0 0-5.6 0v1.6c0 .5-.2.9-.6 1.2l-1.9 1.4c-.5.4-1.3.4-1.8-.1Z"/></svg></span>
             </div>
           </div>
         </div>
@@ -572,10 +590,10 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
           <li data-i18n="talk.1">Start from your mood check-in, the Mood tab or the evening prompt.</li>
           <li data-i18n="talk.2">Prefer to type? Switch to the keyboard anytime.</li>
           <li data-i18n="talk.3">When you're done, save it as today's note and pick how the day felt.</li>
-          <li data-i18n="talk.4">It runs on your iPhone with Apple Intelligence, so your words stay private.</li>
+          <li data-i18n="talk.4">It all happens on your iPhone, so your words stay private.</li>
         </ul>
         <p class="free-line" data-i18n="talk.free">One talk a day is free. Plus makes it unlimited.</p>
-        <p class="fine-dark" data-i18n="talk.fine">Sparky's replies need an iPhone with Apple Intelligence. On other iPhones, he keeps your words as a note. Sparky is a friendly companion, not a crisis service. If you need help, he shows you where to find it.</p>
+        <p class="fine-dark" data-i18n="talk.fine">Sparky's replies are written on your iPhone by Apple Intelligence, in English and 8 more languages. In Arabic, and on iPhones without Apple Intelligence, he answers with short, warm lines of his own and keeps your words as a note. Sparky is a friendly companion, not a crisis service. If you need help, he shows you where to find it.</p>
       </div>
     </div>
   </section>
@@ -596,8 +614,8 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
           </div>
         </div>
         <div class="visual reveal">
-          <div class="phone"><img src="img/talk-evening.jpg" data-ar="img/ar-1-home.jpg" alt="Today screen with a Sun Tzu quote, a 12-day streak and the How was your day? card" data-i18n-alt="alt.today" loading="lazy"></div>
-          <div class="phone"><img src="img/en-5-results.jpg" data-ar="img/ar-5-results.jpg" alt="Your motivational style: The Achiever, with strengths" data-i18n-alt="alt.result" loading="lazy"></div>
+          <div class="phone"><img src="img/c-en-today.jpg" data-ar="img/c-ar-today.jpg" alt="Today screen with a Sun Tzu quote, a 12-day streak and the How was your day? card" data-i18n-alt="alt.today" loading="lazy"></div>
+          <div class="phone"><img src="img/c-en-styles.jpg" data-ar="img/c-ar-styles.jpg" alt="Which one sounds like you? Four style cards: Achiever, Dreamer, Thinker, Connector" data-i18n-alt="alt.result" loading="lazy"></div>
         </div>
       </div>
       <div class="share reveal">
@@ -632,7 +650,7 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
           </div>
         </div>
         <div class="visual reveal">
-          <div class="phone"><img src="img/talk.jpg" data-ar="img/ar-talk.jpg" alt="Mood check-in glowing orange for Great, with Sparky's reply" data-i18n-alt="alt.checkin" loading="lazy"></div>
+          <div class="phone"><img src="img/c-en-mood.jpg" data-ar="img/c-ar-mood.jpg" alt="Mood check-in glowing orange for Great, with Sparky's reply" data-i18n-alt="alt.checkin" loading="lazy"></div>
         </div>
       </div>
       <div class="facts reveal">
@@ -664,7 +682,7 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
         <div class="tile wide reveal">
           <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 4v16" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2 2"/></svg></div>
           <h3>iPhone Duo</h3>
-          <p data-i18n="t.db">Two columns on the inner display, and folding or unfolding keeps your place.</p>
+          <p data-i18n="t.db">Two columns on the big inner display.</p>
         </div>
         <div class="tile reveal">
           <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 20.5s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.9c0 5.4-7.5 10-7.5 10Z"/></svg></div>
@@ -688,12 +706,16 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
   <!-- BILINGUAL -->
   <section id="arabic" style="padding-top:0">
     <div class="wrap center reveal">
-      <span class="eyebrow" data-i18n="bi.eyebrow">English and Arabic</span>
-      <h2 data-i18n="bi.h2">Fully in English and <span lang="ar">العربية</span>.</h2>
-      <p class="lede" data-i18n="bi.lede" style="margin-top:22px">Every quote, widget, Focus session and Siri phrase in both languages, with a true right-to-left layout. Switch anytime in Settings.</p>
+      <span class="eyebrow" data-i18n="bi.eyebrow">10 languages</span>
+      <h2 data-i18n="bi.h2">Sparky speaks your language.</h2>
+      <p class="lede" data-i18n="bi.lede" style="margin-top:22px">English, Arabic and 8 more languages, with a true right-to-left layout in Arabic. Switch anytime in Settings.</p>
+      <ul class="langs" aria-label="Languages">
+        <li lang="en">English</li><li lang="ar">العربية</li><li lang="fr">Français</li><li lang="de">Deutsch</li><li lang="it">Italiano</li>
+        <li lang="es">Español</li><li lang="pt-BR">Português (Brasil)</li><li lang="ja">日本語</li><li lang="ko">한국어</li><li lang="zh-Hans">简体中文</li>
+      </ul>
       <div class="duo" dir="ltr">
-        <figure><div class="phone"><img src="img/f-setup-en.jpg" alt="Focus setup in English" loading="lazy"></div><figcaption>English</figcaption></figure>
-        <figure><div class="phone"><img src="img/f-setup-ar.jpg" alt="Focus setup in Arabic" loading="lazy"></div><figcaption lang="ar">العربية</figcaption></figure>
+        <figure><div class="phone"><img src="img/c-en-focus-setup.jpg" alt="Focus setup in English" loading="lazy"></div><figcaption>English</figcaption></figure>
+        <figure><div class="phone"><img src="img/c-ar-focus-setup.jpg" alt="Focus setup in Arabic" loading="lazy"></div><figcaption lang="ar">العربية</figcaption></figure>
       </div>
     </div>
   </section>
@@ -772,8 +794,10 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
         <span class="email" id="email">support@moodsparkapp.com</span>
         <button class="copy" id="copy" type="button" data-i18n="foot.copy">Copy</button>
       </div>
+      <span><span data-i18n="foot.press">Press and partners:</span> <span class="email email-sm">hello@moodsparkapp.com</span></span>
     </div>
     <nav class="links" aria-label="Footer">
+      <a href="https://www.facebook.com/profile.php?id=61595132611179">Facebook</a>
       <a href="https://moodsparkapp.com/privacy.html" data-i18n="foot.privacy">Privacy Policy</a>
       <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" data-i18n="foot.terms">Terms of Use</a>
       <a href="https://www.instagram.com/moodspark.app/">Instagram</a>
@@ -803,7 +827,7 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
   setTheme(savedTheme === 'dark' ? 'dark' : 'light', false);
   themeBtn.addEventListener('click', function () { setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true); });
   // Flip to false if Apple hasn't approved Family Controls by launch: hides every app-pausing claim.
-  var APP_PAUSING = true;
+  var APP_PAUSING = false;
   if (!APP_PAUSING) root.classList.add('no-pause');
 
   var MOODS = {
@@ -820,13 +844,14 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
           sparky: "Finishing that report took real effort. Rest counts too. Want me to save this as today's note?" },
     ar: { listening: 'يستمع', placeholder: 'تفضّل، أنا أستمع…', thinking: 'سباركي يفكّر…', talking: 'سباركي يتحدث',
           you: 'كان يومي مزدحمًا. أنهيت التقرير، لكني متعب جدًا.',
-          sparky: 'إنهاء التقرير احتاج جهدًا حقيقيًا، والراحة إنجاز أيضًا. هل أحفظ هذا كملاحظة اليوم؟' }
+          sparky: 'شكرًا لأنك أخبرتني. ماذا يدور في بالك أيضًا؟' }
   };
 
   var AR = {
     'nav.focus': 'التركيز', 'nav.talk': 'تحدّث مع سباركي', 'nav.today': 'شرارتك اليومية', 'nav.mood': 'المزاج', 'nav.privacy': 'الخصوصية', 'nav.get': 'حمّل التطبيق',
     'new': 'جديد',
-    'hero.chip': '<b>جديد في MoodSpark 1.1</b> · التركيز والتحدث مع سباركي',
+    'event.text': '<b>اليوم العالمي للصحة النفسية:</b> انضم إلى «تحدي ٧ أيام مع مزاجك»، من ١٠ إلى ١٦ أكتوبر', 'event.go': 'افتحه في App Store ←',
+    'hero.chip': '<b>جديد في MoodSpark 1.1</b> · التركيز والتحدث مع سباركي و٨ لغات جديدة',
     'hero.h1': 'ركّز. <span class="grad">استلهم.</span> افهم مزاجك.',
     'hero.lede': 'أنجز أمرًا واحدًا في كل مرة، وابحث عن شرارة صغيرة كل يوم، واحكِ يومك بصوتك، وسباركي بجانبك.',
     'alt.badge': 'حمّله من App Store', 'theme': 'الوضع الداكن',
@@ -834,7 +859,7 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
     'hero.hi': 'مرحبًا، أنا سباركي!',
     'focus.eyebrow': 'تركيز',
     'focus.h2': 'أنجز أمرًا واحدًا بلا مشتّتات.',
-    'focus.lede': 'اختر مهمة، واضبط المؤقت، وابدأ. سباركي يحرس وقتك، ثم يحتفل معك عندما تنتهي.',
+    'focus.lede': 'اختر مهمة، واضبط المؤقت، وابدأ. سباركي يتابع الوقت عنك، ثم يحتفل معك عندما تنتهي.',
     'focus.flow': 'كيف تعمل جلسة التركيز',
     'step.1': '<b>اضبط المؤقت</b>اختر تحدي اليوم أو اكتب مهمتك الخاصة.',
     'step.2': '<b>ابقَ معها</b>الحلقة تعدّ تنازليًا وسباركي يرافقك.',
@@ -853,9 +878,9 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
     'talk.1': 'ابدأ من تسجيل مزاجك، أو تبويب المزاج، أو تذكير المساء.',
     'talk.2': 'تفضّل الكتابة؟ انتقل إلى لوحة المفاتيح متى شئت.',
     'talk.3': 'وعندما تنتهي، احفظ حديثك كملاحظة اليوم واختر كيف كان شعورك.',
-    'talk.4': 'يعمل على جهازك بتقنية Apple Intelligence، فتبقى كلماتك خاصة بك.',
+    'talk.4': 'كل شيء يحدث على جهازك، فتبقى كلماتك خاصة بك.',
     'talk.free': 'حديث واحد يوميًا مجاني، وPlus يجعل الأحاديث بلا حدود.',
-    'talk.fine': 'تحتاج ردود سباركي إلى iPhone يدعم Apple Intelligence، وعلى الأجهزة الأخرى يحفظ كلماتك كملاحظة. سباركي رفيق لطيف وليس خدمة طوارئ، وإذا احتجت إلى مساعدة يرشدك إلى من يمكنه مساعدتك.',
+    'talk.fine': 'يكتب سباركي ردوده على جهازك بتقنية Apple Intelligence بالإنجليزية و٨ لغات أخرى. أما بالعربية، أو على أجهزة iPhone التي لا تدعم Apple Intelligence، فيرد عليك بعبارات قصيرة ولطيفة من عنده ويحفظ كلامك كملاحظة. سباركي رفيق لطيف وليس خدمة طوارئ، وإذا احتجت إلى مساعدة يرشدك إلى من يمكنه مساعدتك.',
     'demo.label': 'محادثة توضيحية', 'demo.replay': 'شاهدها مرة أخرى',
     'today.eyebrow': 'شرارتك اليومية',
     'today.h2': 'اقتباس يفهمك.',
@@ -879,13 +904,13 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
     'ios.h2': 'سجّل مزاجك دون أن تفتح التطبيق.',
     't.w': 'أدوات الشاشة الرئيسية', 't.wb': 'سجّل مزاجك بلمسة واقرأ اقتباس اليوم من شاشتك الرئيسية مباشرة.',
     't.s': 'سيري والاختصارات', 't.sb': '«سجّل مزاجي في MoodSpark»',
-    't.db': 'عمودان على الشاشة الداخلية، والطيّ أو الفتح يحفظ مكانك.',
+    't.db': 'عمودان على الشاشة الداخلية الكبيرة.',
     't.h': 'تطبيق «صحتي»', 't.hb': 'احفظ تسجيلاتك كحالة ذهنية. اختياري وللكتابة فقط.',
     't.c': 'مركز التحكم', 't.cb': 'أضف «تسجيل المزاج» إلى مركز التحكم أو زر الإجراء.',
     't.a': 'تسهيلات الاستخدام', 't.ab': 'VoiceOver والنص الأكبر والواجهة الداكنة وتقليل الحركة.',
-    'bi.eyebrow': 'العربية والإنجليزية',
-    'bi.h2': 'بالعربية والإنجليزية بالكامل.',
-    'bi.lede': 'كل اقتباس وأداة وجلسة تركيز وعبارة سيري باللغتين، مع تصميم كامل من اليمين إلى اليسار. بدّل بينهما متى شئت من الإعدادات.',
+    'bi.eyebrow': '١٠ لغات',
+    'bi.h2': 'سباركي يتحدث لغتك.',
+    'bi.lede': 'العربية والإنجليزية و٨ لغات أخرى، مع تصميم كامل من اليمين إلى اليسار بالعربية. بدّل اللغة متى شئت من الإعدادات.',
     'p.eyebrow': 'الخصوصية',
     'p.big': '<span>بلا حساب.</span><span>بلا إعلانات.</span><span class="grad">بلا تتبع.</span>',
     'p.lede': 'مزاجك وملاحظاتك وأحاديثك تبقى على جهازك، والتحدث مع سباركي يعمل على جهازك بتقنية Apple Intelligence. البيانات الوحيدة التي تغادر هاتفك هي ما يحتاجه App Store لإدارة اشتراك Plus، وهي غير مرتبطة بك.',
@@ -899,14 +924,14 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
     'plan.l': 'مدى الحياة', 'plan.once': 'مرة واحدة', 'plan.lsub': 'دفعة واحدة، لك إلى الأبد.',
     'plan.fine': 'الأسعار المعروضة بالدولار الأمريكي، ويعرض App Store السعر الخاص ببلدك. تتجدد الاشتراكات تلقائيًا ما لم تُلغَ قبل 24 ساعة على الأقل من نهاية الفترة الحالية. يمكنك إدارة اشتراكك أو إلغاؤه في أي وقت من إعدادات حساب Apple.',
     'final.h2': 'أشعل يومك.', 'final.lede': 'سباركي بانتظارك.',
-    'foot.q': 'أسئلة أو ملاحظات؟ نقرأ كل رسالة.', 'foot.copy': 'نسخ', 'foot.copied': 'تم النسخ',
+    'foot.q': 'أسئلة أو ملاحظات؟ نقرأ كل رسالة.', 'foot.copy': 'نسخ', 'foot.press': 'للصحافة والشراكات:', 'foot.copied': 'تم النسخ',
     'foot.privacy': 'سياسة الخصوصية', 'foot.terms': 'شروط الاستخدام',
     'foot.med': 'للإلهام والتأمل الذاتي فقط، وليس نصيحة طبية أو تقييمًا نفسيًا.',
     'alt.today': 'شاشة اليوم مع اقتباس اليوم', 'alt.run': 'جلسة تركيز تعدّ تنازليًا وسباركي في الحلقة', 'alt.checkin': 'تسجيل المزاج مع رد سباركي',
     'alt.sparky': 'سباركي يلوّح', 'alt.setup': 'إعداد جلسة التركيز: تحدي اليوم ومؤقت ٢٥ دقيقة', 'alt.up': 'انتهى الوقت: نعم أنهيتها، أو ٥ دقائق أخرى، أو احفظها للغد',
-    'alt.done': 'أُنجزت المهمة: سباركي يحتفل بـ٢٥ دقيقة من التركيز', 'alt.island': 'Dynamic Island يعرض العدّ التنازلي مع زرّي +٥ دقائق وتم',
+    'alt.done': 'أُنجزت المهمة: سباركي يحتفل بـ٢٥ دقيقة من التركيز', 'alt.island': 'نشاط مباشر على شاشة القفل يعرض العدّ التنازلي مع زرّي +٥ دقائق وتم',
     'alt.steps': 'جلسة تركيز مع ثلاث خطوات صغيرة', 'alt.pause': 'مفتاح إيقاف التطبيقات مؤقتًا مفعّل لثلاثة تطبيقات',
-    'alt.voice': 'محادثة توضيحية مع سباركي', 'alt.result': 'أسلوبك التحفيزي: المنجز', 'alt.widgets': 'أدوات الشاشة الرئيسية', 'alt.share': 'تصاميم مشاركة الاقتباس',
+    'alt.voice': 'محادثة توضيحية مع سباركي', 'alt.result': 'أي أسلوب يشبهك؟ أربع بطاقات: المنجز والحالم والمفكر والواصل', 'alt.widgets': 'أدوات الشاشة الرئيسية', 'alt.share': 'تصاميم مشاركة الاقتباس',
     'mood.pick': 'اختر مزاجًا'
   };
 
@@ -1052,6 +1077,9 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
       if (el.getBoundingClientRect().top > innerHeight) { el.classList.add('below'); io.observe(el); }
     });
   }
+
+  /* ---------- show the event bar until the event ends (Oct 16, Riyadh time) ---------- */
+  if (Date.now() < Date.parse('2026-10-17T00:00:00+03:00')) document.getElementById('event-bar').hidden = false;
 
   /* ---------- start in Arabic for #ar links, a saved choice, or an Arabic browser ---------- */
   var saved = null;
