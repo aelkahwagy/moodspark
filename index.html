@@ -217,9 +217,30 @@ html[dir="rtl"] .lang { padding: 7px 14px 7px 30px; background-position: left 12
 .ftile.island { grid-column: 1 / 3; background: linear-gradient(160deg, var(--night) 0%, var(--night-2) 100%); border-color: transparent; }
 .ftile.island :is(h3) { color: var(--night-ink); }
 .ftile.island p { color: var(--night-muted); }
-.island-shot { margin-top: 22px; padding: clamp(18px, 4vw, 40px); border-radius: 26px;
-  background: radial-gradient(80% 90% at 20% 0%, #6B5A4A, transparent 70%), linear-gradient(160deg, #3A3530, #1C1A20); }
-.la { border-radius: 28px; padding: clamp(14px, 2.4vw, 22px); color: #fff; display: grid; gap: clamp(12px, 2vw, 18px);
+.ftile.island { display: flex; flex-direction: column; }
+.island-shot { flex: 1; margin-top: 22px; min-height: 540px; border-radius: 34px; overflow: hidden; color: #fff;
+  padding: 16px clamp(16px, 3vw, 30px) 20px; display: flex; flex-direction: column; gap: 16px;
+  background:
+    radial-gradient(120% 70% at 108% 22%, transparent 47%, rgba(255, 236, 214, .17) 48.4%, transparent 50.6%),
+    radial-gradient(115% 80% at 108% 42%, transparent 47%, rgba(255, 236, 214, .10) 48.4%, transparent 50.4%),
+    radial-gradient(135% 95% at -12% 86%, transparent 46%, rgba(255, 236, 214, .11) 47.4%, transparent 49.6%),
+    radial-gradient(70% 55% at 12% 8%, #a07850 0%, transparent 66%),
+    radial-gradient(60% 50% at 92% 96%, #4b3f60 0%, transparent 70%),
+    linear-gradient(165deg, #5e4837 0%, #2d2723 55%, #19161c 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08), 0 40px 70px -40px rgba(0, 0, 0, .7); }
+.ls-island { align-self: center; display: flex; align-items: center; justify-content: space-between; gap: 48px;
+  background: #000; border-radius: 999px; padding: 6px 16px 6px 7px; min-width: 200px; }
+.ls-ring { width: 26px; height: 26px; border-radius: 50%; border: 2.5px solid #fff; display: grid; place-items: center; }
+.ls-ring img { width: 74%; }
+.ls-cd { font: 600 .98rem var(--display); color: #C9B8FF; font-variant-numeric: tabular-nums; }
+.ls-clock { display: grid; justify-items: center; text-align: center; gap: 2px; margin-top: 6px; }
+.ls-date { font-weight: 600; font-size: clamp(.9rem, 1.4vw, 1.05rem); color: rgba(255, 245, 235, .85); }
+.ls-time { font: 700 clamp(4rem, 8.5vw, 6.4rem)/1.02 var(--display); letter-spacing: -.02em; font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, #fff 30%, #f0dcc8); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.ls-tools { display: flex; justify-content: space-between; padding: 0 4px; }
+.ls-tool { width: 46px; height: 46px; border-radius: 50%; background: rgba(255, 255, 255, .15); display: grid; place-items: center; }
+.ls-tool svg { width: 20px; height: 20px; }
+.la { margin-top: auto; border-radius: 28px; padding: clamp(14px, 2.4vw, 22px); color: #fff; display: grid; gap: clamp(12px, 2vw, 18px);
   background: linear-gradient(100deg, #8B5BFF 0%, #6A62FF 45%, #3D5AFE 100%); box-shadow: 0 24px 50px -20px rgba(0, 0, 0, .55), inset 0 0 0 1px rgba(255, 255, 255, .18); }
 .la-top { display: flex; align-items: center; gap: 14px; }
 .la-ring { width: 54px; height: 54px; flex: none; border-radius: 50%; border: 4px solid #fff; display: grid; place-items: center; background: rgba(255, 255, 255, .12); }
@@ -232,6 +253,16 @@ html[dir="rtl"] .lang { padding: 7px 14px 7px 30px; background-position: left 12
 .la-b { display: flex; align-items: center; justify-content: center; gap: 6px; height: 46px; border-radius: 999px; font-weight: 600; background: rgba(255, 255, 255, .22); }
 .la-b.la-done { background: #fff; color: #3D5AFE; }
 .la-b svg { width: 16px; height: 16px; }
+@media (max-width: 560px) {
+  .ftile.island { padding: 24px 18px 18px; }
+  .island-shot { padding: 14px 12px 16px; min-height: 0; }
+  .la-top { display: grid; grid-template-columns: auto 1fr auto; align-items: center; column-gap: 12px; row-gap: 10px; }
+  .la-text { display: contents; }
+  .la-label { grid-column: 2; }
+  .la-task { grid-column: 1 / -1; grid-row: 2; }
+  .la-ring { width: 42px; height: 42px; border-width: 3px; }
+  .ls-island { min-width: 170px; gap: 32px; }
+}
 .ftile.steps { grid-column: 3; grid-row: 1 / 3; }
 .no-pause .ftile.steps { grid-row: auto; }
 .ftile.steps .phone { --w: 270px; margin: 22px auto -140px; }
@@ -574,6 +605,8 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
           <h3 data-i18n="ft.island.h">On your Lock Screen and in the Dynamic Island.</h3>
           <p data-i18n="ft.island.p">Your countdown stays in view, with +5 minutes and Done one tap away.</p>
           <div class="island-shot">
+            <div class="ls-island" aria-hidden="true"><span class="ls-ring"><img src="img/sparky-calm.png" alt=""></span><span class="ls-cd" data-i18n="la.time">24:23</span></div>
+            <div class="ls-clock" aria-hidden="true"><span class="ls-date" id="ls-date">Wednesday, October 7</span><span class="ls-time" data-i18n="ls.time">9:41</span></div>
             <div class="la" role="img" aria-label="Lock Screen Live Activity showing a focus countdown with +5 min and Done buttons" data-i18n-aria="alt.island">
               <div class="la-top">
                 <span class="la-ring" aria-hidden="true"><img src="img/sparky-calm.png" alt=""></span>
@@ -584,6 +617,10 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
                 <span class="la-b" data-i18n="la.plus">+5 min</span>
                 <span class="la-b la-done"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="la.done">Done</span></span>
               </div>
+            </div>
+            <div class="ls-tools" aria-hidden="true">
+              <span class="ls-tool"><svg viewBox="0 0 24 24"><path d="M8 2h8l-1 6H9L8 2Zm1 8h6v11a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V10Z" fill="#fff"/><circle cx="12" cy="14" r="1.4" fill="#2c2622"/></svg></span>
+              <span class="ls-tool"><svg viewBox="0 0 24 24"><path d="M4 8a2 2 0 0 1 2-2h2l1.5-2h5L16 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8Z" fill="#fff"/><circle cx="12" cy="12.5" r="3.4" fill="#2c2622"/></svg></span>
             </div>
           </div>
         </div>
@@ -922,6 +959,10 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
   }
 
   var langSelect = document.getElementById('lang-select');
+  function lockDate() {
+    var tag = lang === 'zh-Hans' ? 'zh-CN' : lang;
+    try { document.getElementById('ls-date').textContent = new Intl.DateTimeFormat(tag, { weekday: 'long', month: 'long', day: 'numeric' }).format(new Date()); } catch (e) {}
+  }
   function setLang(next, remember) {
     if (LANGS.indexOf(next) < 0) next = 'en';
     return loadLang(next).then(function () {
@@ -935,6 +976,7 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
       swapImgs.forEach(function (img) { img.src = next === 'ar' ? img.dataset.ar : img.dataset.en; });
       shotImgs.forEach(function (img) { img.src = 'img/shots/' + next + '-' + img.dataset.shot + '.jpg'; });
       langSelect.value = next;
+      lockDate();
       setMood(current);
       voiceLang();
       if (remember) { try { localStorage.setItem('ms-lang', next); } catch (e) {} }
@@ -1073,6 +1115,7 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
   var start = fromHash || (LANGS.indexOf(saved) >= 0 ? saved : null) || fromBrowser || 'en';
   setMood('great');
   idleState();
+  lockDate();
   if (start !== 'en') setLang(start, !!fromHash);
 })();
 </script>
