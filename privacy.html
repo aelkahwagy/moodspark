@@ -4,47 +4,79 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MoodSpark — Privacy Policy</title>
+<link rel="icon" type="image/png" href="img/icon.png">
 <style>
-  :root { --bg:#F4F6FB; --text:#0F1222; --muted:#6B7280; --primary:#3D5AFE; }
+  :root { --bg:#F4F6FB; --text:#0F1222; --muted:#5B6276; --primary:#3D5AFE; }
   @media (prefers-color-scheme: dark) {
-    :root { --bg:#0B0E1A; --text:#F5F7FF; --muted:#9AA3B2; --primary:#6478FF; }
+    :root { --bg:#0B0E1A; --text:#F5F7FF; --muted:#9AA3B2; --primary:#7088FF; }
   }
   * { margin:0; box-sizing:border-box; }
   body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; line-height:1.7; }
-  .wrap { max-width:640px; margin:0 auto; padding:48px 24px; }
+  .wrap { max-width:660px; margin:0 auto; padding:48px 24px 64px; }
+  .home { display:inline-block; margin-bottom:28px; font-weight:600; text-decoration:none; }
   h1 { margin-bottom:4px; }
   .date { color:var(--muted); margin-bottom:28px; }
-  h2 { font-size:1.1rem; margin:24px 0 6px; }
+  h2 { font-size:1.1rem; margin:28px 0 6px; }
   p, li { color:var(--muted); }
+  p + p { margin-top:10px; }
+  ul { padding-left:1.2em; margin-top:8px; }
+  li + li { margin-top:4px; }
   a { color:var(--primary); }
 </style>
 </head>
 <body>
 <div class="wrap">
+  <a class="home" href="https://moodsparkapp.com/">← MoodSpark</a>
   <h1>Privacy Policy</h1>
-  <p class="date">MoodSpark · Effective 2 October 2026</p>
+  <p class="date">MoodSpark · Last updated 7 October 2026</p>
 
   <h2>The short version</h2>
-  <p>Your moods, notes, and quotes stay on your device. The only data that leaves it is an anonymous purchase record, used to keep subscriptions working. It is not linked to you and is never used for advertising or tracking.</p>
+  <p>Your moods, notes, quotes, focus sessions and conversations with Sparky stay on your iPhone. Speech recognition and Sparky's AI run on the device itself. The only data that leaves your iPhone is an anonymous purchase record, used to keep subscriptions working. It is not linked to you and is never used for advertising or tracking.</p>
 
   <h2>What we store, and where</h2>
-  <p>Your quiz result, mood check-ins, streaks, favorites, reflections, and settings are stored only on your device (and in your device backups, which you control). MoodSpark has no servers and no accounts, and your personal content is never transmitted to us or anyone else.</p>
+  <p>Your motivational style, mood check-ins, notes, streaks, favorites, goals, focus sessions and settings are stored only on your device (and in your device backups, which you control). MoodSpark has no servers and no accounts, and your personal content is never transmitted to us or anyone else.</p>
   <p>The one exception is purchases: if you buy MoodSpark Plus, the purchase is processed by Apple, and an anonymous purchase record (purchase history plus a random app-generated ID; no name, no email, no content) is shared with RevenueCat, our subscription-analytics provider, so we can understand revenue and subscription health. This data is not linked to your identity and is never used for advertising or tracking. See <a href="https://www.revenuecat.com/privacy">RevenueCat's privacy policy</a>.</p>
+
+  <h2>Talk to Sparky: microphone and speech recognition</h2>
+  <p>Talk to Sparky is optional. When you start a talk, MoodSpark asks for access to your microphone and to speech recognition.</p>
+  <ul>
+    <li>Your voice is turned into text by Apple's speech recognition running on your iPhone. The audio and the text are not sent to us or to any server, and the audio is never recorded or saved.</li>
+    <li>The first time you talk in a language, your iPhone may download Apple's speech model for that language from Apple. The download contains no personal data.</li>
+    <li>Sparky speaks his replies with your iPhone's built-in voice.</li>
+    <li>The conversation is shown on your screen and is discarded when the talk ends, unless you choose "Save as today's note". That saves the text with your other notes on your device.</li>
+    <li>You can type instead of talking, and you can turn off microphone or speech recognition access anytime in Settings → Privacy &amp; Security.</li>
+  </ul>
+
+  <h2>Sparky's AI (Apple Intelligence)</h2>
+  <p>Some features use Apple's on-device language model (Apple Intelligence) to write text for you: Sparky's replies when you talk with him or check in, Sparky's weekly mood insight, and the tiny steps for a Focus task. The model runs entirely on your iPhone. MoodSpark does not send your words, moods or notes to any server or AI service.</p>
+  <p>If Apple Intelligence isn't available on your iPhone or in your language, Sparky uses short lines of his own instead.</p>
+
+  <h2>Focus</h2>
+  <p>Your focus tasks, timers and results are stored on your device. The countdown on your Lock Screen and in the Dynamic Island is a Live Activity that your iPhone updates itself; nothing is sent to a server. A "time's up" alert is a notification scheduled on your device, and only appears if you allow notifications.</p>
+
+  <h2>Notifications</h2>
+  <p>Daily reminders and Focus alerts are scheduled on your iPhone. MoodSpark doesn't use a push notification service. You can turn notifications off anytime in Settings → Notifications.</p>
+
+  <h2>Sharing a quote</h2>
+  <p>When you share a quote card, the image is made on your device and passed to the app you pick in the iOS share sheet. That app's own privacy policy then applies.</p>
+
+  <h2>Support links</h2>
+  <p>If a talk with Sparky turns heavy, he can show you where to find help. Tapping a helpline opens your Phone app or the findahelpline.com website, which are run by others and have their own privacy policies. MoodSpark doesn't see what you do there.</p>
 
   <h2>Apple Health</h2>
   <p>If you turn on "Save to Apple Health", each mood check-in is written to Apple Health as a State of Mind entry. This is optional, write-only (MoodSpark never reads your Health data), handled entirely by Apple's HealthKit on your device, and governed by <a href="https://www.apple.com/legal/privacy/">Apple's privacy policy</a>. You can revoke access anytime in Settings → Health.</p>
 
   <h2>Siri, widgets &amp; Shortcuts</h2>
-  <p>Mood logging and quotes offered through Siri, Spotlight, widgets, and Shortcuts are processed by Apple's on-device frameworks. MoodSpark receives no information about your Siri usage.</p>
+  <p>Mood logging and quotes offered through Siri, Spotlight, widgets, Control Center and Shortcuts are processed by Apple's on-device frameworks. MoodSpark receives no information about your Siri usage.</p>
 
   <h2>Purchases</h2>
-  <p>If MoodSpark offers optional in-app purchases, payment is handled entirely by Apple. We never see your payment details.</p>
+  <p>Payment for MoodSpark Plus is handled entirely by Apple. We never see your payment details.</p>
 
   <h2>Children</h2>
   <p>MoodSpark does not collect personal information from anyone, including children. The only data collected is the anonymous purchase record described above.</p>
 
   <h2>Changes</h2>
-  <p>If this policy ever changes, the new version will be posted here with a new effective date.</p>
+  <p>If this policy changes, the new version will be posted here with a new date.</p>
 
   <h2>Contact</h2>
   <p>Questions: <a href="mailto:support@moodsparkapp.com">support@moodsparkapp.com</a></p>
