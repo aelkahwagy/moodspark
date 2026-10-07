@@ -126,7 +126,7 @@
  "alt.island": "Actividad en vivo en la pantalla bloqueada con el temporizador de enfoque y los botones +5 min y Listo",
  "alt.steps": "Una sesión de enfoque con tres pasitos bajo el temporizador",
  "alt.pause": "El interruptor “Pausar apps” activado para 3 apps, encima de “Iniciar enfoque”",
- "alt.result": "¿Cuál se parece más a ti? Cuatro tarjetas de estilo: Triunfador, Soñador, Pensador, Conector",
+ "alt.result": "Tu estilo motivacional",
  "alt.share": "Dieciséis diseños de tarjetas para compartir la frase del día",
  "alt.widgets": "Widgets Chispa diaria y Registro de ánimo",
  "theme": "Modo oscuro",
@@ -146,5 +146,10 @@
  "voice.sparky": "Terminar ese informe te costó un esfuerzo de verdad. Descansar también cuenta. ¿Quieres que guarde esto como la nota de hoy?",
  "foot.copied": "Copiado",
  "sparky.alt": "Sparky",
- "lang.label": "Idioma"
+ "lang.label": "Idioma",
+ "la.label": "SESIÓN DE ENFOQUE",
+ "la.task": "Termina una tarea que llevas tiempo posponiendo.",
+ "la.plus": "+5 min",
+ "la.done": "Listo",
+ "la.time": "24:23"
 }

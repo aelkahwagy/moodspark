@@ -126,7 +126,7 @@
  "alt.island": "Attività in tempo reale sulla schermata di blocco con il conto alla rovescia del Focus e i pulsanti +5 min e Fatto",
  "alt.steps": "Una sessione Focus con tre piccoli passi sotto il timer",
  "alt.pause": "L'interruttore “Metti in pausa le app” attivo per 3 app, sopra “Avvia il focus”",
- "alt.result": "Quale ti somiglia di più? Quattro schede di stile: Intraprendente, Sognatore, Pensatore, Anima del gruppo",
+ "alt.result": "Il tuo stile motivazionale",
  "alt.share": "Sedici design di schede da condividere per la citazione del giorno",
  "alt.widgets": "Widget Scintilla di oggi e Check-in umore",
  "theme": "Modalità scura",
@@ -146,5 +146,10 @@
  "voice.sparky": "Finire quella relazione ti è costato tanta fatica. Anche il riposo conta. Vuoi che salvi questa chiacchierata come nota di oggi?",
  "foot.copied": "Copiato",
  "sparky.alt": "Sparky",
- "lang.label": "Lingua"
+ "lang.label": "Lingua",
+ "la.label": "SESSIONE FOCUS",
+ "la.task": "Porta a termine una cosa che continui a rimandare.",
+ "la.plus": "+5 min",
+ "la.done": "Fatto",
+ "la.time": "24:23"
 }

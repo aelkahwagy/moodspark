@@ -126,7 +126,7 @@
  "alt.island": "Atividade ao Vivo na Tela Bloqueada com a contagem regressiva do foco e os botões +5 min e Pronto",
  "alt.steps": "Uma sessão de foco com três pequenos passos abaixo do timer",
  "alt.pause": "A opção “Pausar apps” ativada para 3 apps, acima de “Iniciar foco”",
- "alt.result": "“Qual deles tem a sua cara?” Quatro cartões de estilo: Realizador, Sonhador, Pensador, Agregador",
+ "alt.result": "Seu estilo motivacional",
  "alt.share": "Dezesseis designs de cartão para compartilhar a frase do dia",
  "alt.widgets": "Widgets Faísca do Dia e Registro de Humor",
  "theme": "Modo escuro",
@@ -146,5 +146,10 @@
  "voice.sparky": "Terminar esse relatório deu trabalho de verdade. Descansar também conta. Quer que eu salve isso como nota do dia?",
  "foot.copied": "Copiado",
  "sparky.alt": "Sparky",
- "lang.label": "Idioma"
+ "lang.label": "Idioma",
+ "la.label": "SESSÃO DE FOCO",
+ "la.task": "Termine uma tarefa que você vem adiando.",
+ "la.plus": "+5 min",
+ "la.done": "Pronto",
+ "la.time": "24:23"
 }

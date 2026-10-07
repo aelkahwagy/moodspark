@@ -126,7 +126,7 @@
  "alt.island": "Live-Aktivität auf dem Sperrbildschirm: Fokus-Countdown mit den Tasten „+5 Min.“ und „Fertig“",
  "alt.steps": "Eine Fokus-Session mit drei Mini-Schritten unter dem Timer",
  "alt.pause": "Schalter „Apps pausieren“ für 3 Apps eingeschaltet, über „Fokus starten“",
- "alt.result": "Welcher klingt nach dir? Vier Stil-Karten: Macher, Träumer, Denker, Brückenbauer",
+ "alt.result": "Dein Motivationsstil",
  "alt.share": "Sechzehn Karten-Designs zum Teilen eines Tageszitats",
  "alt.widgets": "Widgets „Täglicher Funke“ und „Stimmungs-Check-in“",
  "theme": "Dunkelmodus",
@@ -146,5 +146,10 @@
  "voice.sparky": "Den Bericht fertigzumachen hat echt Kraft gekostet. Ausruhen zählt auch. Soll ich das als Notiz zu heute speichern?",
  "foot.copied": "Kopiert",
  "sparky.alt": "Sparky",
- "lang.label": "Sprache"
+ "lang.label": "Sprache",
+ "la.label": "FOKUS-SESSION",
+ "la.task": "Erledige eine Aufgabe, die du schon lange aufschiebst.",
+ "la.plus": "+5 Min.",
+ "la.done": "Fertig",
+ "la.time": "24:23"
 }

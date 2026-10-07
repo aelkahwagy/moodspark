@@ -126,7 +126,7 @@
  "alt.island": "Activité en direct sur l’écran verrouillé : compte à rebours de focus avec les boutons +5 min et OK",
  "alt.steps": "Une session de focus avec trois mini-étapes sous le minuteur",
  "alt.pause": "L’option « Mettre les apps en pause » activée pour 3 apps, au-dessus de « Lancer le focus »",
- "alt.result": "Lequel te ressemble ? Quatre cartes de style : Battant, Rêveur, Penseur, Rassembleur",
+ "alt.result": "Ton style de motivation",
  "alt.share": "Seize designs de cartes pour partager une citation du jour",
  "alt.widgets": "Widgets Étincelle du jour et Point humeur",
  "theme": "Mode sombre",
@@ -146,5 +146,10 @@
  "voice.sparky": "Finir ce rapport, ça t’a demandé un vrai effort. Le repos compte aussi. Tu veux que je l’ajoute à ta note du jour ?",
  "foot.copied": "Copié",
  "sparky.alt": "Sparky",
- "lang.label": "Langue"
+ "lang.label": "Langue",
+ "la.label": "SESSION DE FOCUS",
+ "la.task": "Termine une tâche que tu repousses depuis un moment.",
+ "la.plus": "+5 min",
+ "la.done": "OK",
+ "la.time": "24:23"
 }

@@ -217,7 +217,21 @@ html[dir="rtl"] .lang { padding: 7px 14px 7px 30px; background-position: left 12
 .ftile.island { grid-column: 1 / 3; background: linear-gradient(160deg, var(--night) 0%, var(--night-2) 100%); border-color: transparent; }
 .ftile.island :is(h3) { color: var(--night-ink); }
 .ftile.island p { color: var(--night-muted); }
-.island-shot { margin-top: 20px; overflow: hidden; border-radius: 24px; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .6); }
+.island-shot { margin-top: 22px; padding: clamp(18px, 4vw, 40px); border-radius: 26px;
+  background: radial-gradient(80% 90% at 20% 0%, #6B5A4A, transparent 70%), linear-gradient(160deg, #3A3530, #1C1A20); }
+.la { border-radius: 28px; padding: clamp(14px, 2.4vw, 22px); color: #fff; display: grid; gap: clamp(12px, 2vw, 18px);
+  background: linear-gradient(100deg, #8B5BFF 0%, #6A62FF 45%, #3D5AFE 100%); box-shadow: 0 24px 50px -20px rgba(0, 0, 0, .55), inset 0 0 0 1px rgba(255, 255, 255, .18); }
+.la-top { display: flex; align-items: center; gap: 14px; }
+.la-ring { width: 54px; height: 54px; flex: none; border-radius: 50%; border: 4px solid #fff; display: grid; place-items: center; background: rgba(255, 255, 255, .12); }
+.la-ring img { width: 70%; }
+.la-text { display: grid; gap: 2px; min-width: 0; flex: 1; }
+.la-label { font-size: .72rem; font-weight: 700; letter-spacing: .08em; opacity: .75; }
+.la-task { font-weight: 600; font-size: clamp(.95rem, 1.6vw, 1.12rem); line-height: 1.3; }
+.la-time { font: 700 clamp(1.6rem, 3.4vw, 2.3rem)/1 var(--display); font-variant-numeric: tabular-nums; flex: none; }
+.la-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.la-b { display: flex; align-items: center; justify-content: center; gap: 6px; height: 46px; border-radius: 999px; font-weight: 600; background: rgba(255, 255, 255, .22); }
+.la-b.la-done { background: #fff; color: #3D5AFE; }
+.la-b svg { width: 16px; height: 16px; }
 .ftile.steps { grid-column: 3; grid-row: 1 / 3; }
 .no-pause .ftile.steps { grid-row: auto; }
 .ftile.steps .phone { --w: 270px; margin: 22px auto -140px; }
@@ -512,9 +526,9 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
         <span class="cta-note" data-i18n="hero.note">Free to download. Plus starts with a 7-day free trial.</span>
       </div>
       <div class="stage">
-        <div class="phone side l"><img src="img/c-en-today.jpg" data-ar="img/c-ar-today.jpg" alt="Today screen with the daily quote and a 12-day streak" data-i18n-alt="alt.today"></div>
-        <div class="phone main"><img src="img/c-en-focus-run.jpg" data-ar="img/c-ar-focus-run.jpg" alt="Focus session counting down from 17:45 with Sparky in the ring" data-i18n-alt="alt.run"></div>
-        <div class="phone side r"><img src="img/c-en-mood.jpg" data-ar="img/c-ar-mood.jpg" alt="Mood check-in with Sparky and the Want to tell me about it? button" data-i18n-alt="alt.checkin"></div>
+        <div class="phone side l"><img src="img/shots/en-today.jpg" data-shot="today" alt="Today screen with the daily quote and a 12-day streak" data-i18n-alt="alt.today"></div>
+        <div class="phone main"><img src="img/shots/en-focus-run.jpg" data-shot="focus-run" alt="Focus session counting down from 17:45 with Sparky in the ring" data-i18n-alt="alt.run"></div>
+        <div class="phone side r"><img src="img/shots/en-mood.jpg" data-shot="mood" alt="Mood check-in with Sparky and the Want to tell me about it? button" data-i18n-alt="alt.checkin"></div>
         <div class="hero-sparky">
           <img src="img/sparky-wave.png" alt="Sparky, the MoodSpark mascot, waving" data-i18n-alt="alt.sparky">
           <span class="bubble-hi" data-i18n="hero.hi">Hi, I'm Sparky!</span>
@@ -534,22 +548,22 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
 
       <ol class="flow reveal" style="list-style:none;padding-inline-start:0" aria-label="How a focus session works" data-i18n-aria="focus.flow">
         <li class="step">
-          <div class="phone"><img src="img/c-en-focus-setup.jpg" data-ar="img/c-ar-focus-setup.jpg" alt="Focus setup: today's challenge, a 25-minute dial and Start focus" data-i18n-alt="alt.setup" loading="lazy"></div>
+          <div class="phone"><img src="img/shots/en-focus-setup.jpg" data-shot="focus-setup" alt="Focus setup: today's challenge, a 25-minute dial and Start focus" data-i18n-alt="alt.setup" loading="lazy"></div>
           <span class="step-n">1</span>
           <p data-i18n="step.1"><b>Set the dial</b>Pick today's challenge or write your own task.</p>
         </li>
         <li class="step">
-          <div class="phone"><img src="img/c-en-focus-run.jpg" data-ar="img/c-ar-focus-run.jpg" alt="The ring counts back while Sparky stays calm" data-i18n-alt="alt.run" loading="lazy"></div>
+          <div class="phone"><img src="img/shots/en-focus-run.jpg" data-shot="focus-run" alt="The ring counts back while Sparky stays calm" data-i18n-alt="alt.run" loading="lazy"></div>
           <span class="step-n">2</span>
           <p data-i18n="step.2"><b>Stay with it</b>The ring counts back while Sparky keeps you company.</p>
         </li>
         <li class="step">
-          <div class="phone"><img src="img/f-up-en.jpg" data-ar="img/f-up-ar.jpg" alt="Time's up: Yes, I finished, 5 more minutes, or Save it for tomorrow" data-i18n-alt="alt.up" loading="lazy"></div>
+          <div class="phone"><img src="img/shots/en-focus-timeup.jpg" data-shot="focus-timeup" alt="Time's up: Yes, I finished, 5 more minutes, or Save it for tomorrow" data-i18n-alt="alt.up" loading="lazy"></div>
           <span class="step-n">3</span>
           <p data-i18n="step.3"><b>Time's up, kindly</b>Finish it, take 5 more minutes or save it for tomorrow.</p>
         </li>
         <li class="step">
-          <div class="phone"><img src="img/c-en-focus-done.jpg" data-ar="img/c-ar-focus-done.jpg" alt="Task done: Sparky celebrates 25 minutes of focus" data-i18n-alt="alt.done" loading="lazy"></div>
+          <div class="phone"><img src="img/shots/en-focus-done.jpg" data-shot="focus-done" alt="Task done: Sparky celebrates 25 minutes of focus" data-i18n-alt="alt.done" loading="lazy"></div>
           <span class="step-n">4</span>
           <p data-i18n="step.4"><b>Celebrate</b>Sparky cheers, then asks how you feel now.</p>
         </li>
@@ -559,12 +573,24 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
         <div class="ftile island reveal">
           <h3 data-i18n="ft.island.h">On your Lock Screen and in the Dynamic Island.</h3>
           <p data-i18n="ft.island.p">Your countdown stays in view, with +5 minutes and Done one tap away.</p>
-          <div class="island-shot"><img src="img/c-en-lock.jpg" data-ar="img/c-ar-lock.jpg" alt="Lock Screen Live Activity showing a focus countdown with +5 min and Done buttons" data-i18n-alt="alt.island" loading="lazy"></div>
+          <div class="island-shot">
+            <div class="la" role="img" aria-label="Lock Screen Live Activity showing a focus countdown with +5 min and Done buttons" data-i18n-aria="alt.island">
+              <div class="la-top">
+                <span class="la-ring" aria-hidden="true"><img src="img/sparky-calm.png" alt=""></span>
+                <span class="la-text"><span class="la-label" data-i18n="la.label">FOCUS SESSION</span><span class="la-task" data-i18n="la.task">Finish one task you have been putting off.</span></span>
+                <span class="la-time" data-i18n="la.time">24:23</span>
+              </div>
+              <div class="la-btns" aria-hidden="true">
+                <span class="la-b" data-i18n="la.plus">+5 min</span>
+                <span class="la-b la-done"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="la.done">Done</span></span>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="ftile steps reveal">
           <h3 data-i18n="ft.steps.h">Tiny steps.</h3>
           <p data-i18n="ft.steps.p">A big task? Sparky breaks it into tiny steps you can tick off as you go.</p>
-          <div class="phone"><img src="img/c-en-focus-steps.jpg" data-ar="img/c-ar-focus-steps.jpg" alt="A focus session with three tiny steps under the timer" data-i18n-alt="alt.steps" loading="lazy"></div>
+          <div class="phone"><img src="img/shots/en-focus-steps.jpg" data-shot="focus-steps" alt="A focus session with three tiny steps under the timer" data-i18n-alt="alt.steps" loading="lazy"></div>
         </div>
         <div class="ftile pause reveal" data-pause>
           <div>
@@ -638,8 +664,8 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
           </div>
         </div>
         <div class="visual reveal">
-          <div class="phone"><img src="img/c-en-today.jpg" data-ar="img/c-ar-today.jpg" alt="Today screen with a Sun Tzu quote, a 12-day streak and the How was your day? card" data-i18n-alt="alt.today" loading="lazy"></div>
-          <div class="phone"><img src="img/c-en-styles.jpg" data-ar="img/c-ar-styles.jpg" alt="Which one sounds like you? Four style cards: Achiever, Dreamer, Thinker, Connector" data-i18n-alt="alt.result" loading="lazy"></div>
+          <div class="phone"><img src="img/shots/en-today.jpg" data-shot="today" alt="Today screen with a Sun Tzu quote, a 12-day streak and the How was your day? card" data-i18n-alt="alt.today" loading="lazy"></div>
+          <div class="phone"><img src="img/shots/en-style.jpg" data-shot="style" alt="Your motivational style in MoodSpark" data-i18n-alt="alt.result" loading="lazy"></div>
         </div>
       </div>
       <div class="share reveal">
@@ -674,7 +700,7 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
           </div>
         </div>
         <div class="visual reveal">
-          <div class="phone"><img src="img/c-en-mood.jpg" data-ar="img/c-ar-mood.jpg" alt="Mood check-in glowing orange for Great, with Sparky's reply" data-i18n-alt="alt.checkin" loading="lazy"></div>
+          <div class="phone"><img src="img/shots/en-mood.jpg" data-shot="mood" alt="Mood check-in glowing orange for Great, with Sparky's reply" data-i18n-alt="alt.checkin" loading="lazy"></div>
         </div>
       </div>
       <div class="facts reveal">
@@ -696,7 +722,7 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
         <div class="tile tall reveal">
           <h3 data-i18n="t.w">Home Screen widgets</h3>
           <p data-i18n="t.wb">Log your mood with one tap and read today's quote right from your Home Screen.</p>
-          <div class="phone"><img src="img/en-8-widgets.jpg" data-ar="img/ar-8-widgets.jpg" alt="Daily Spark and Mood Check-In widgets" data-i18n-alt="alt.widgets" loading="lazy"></div>
+          <div class="phone"><img src="img/shots/en-widgets.jpg" data-shot="widgets" alt="Daily Spark and Mood Check-In widgets" data-i18n-alt="alt.widgets" loading="lazy"></div>
         </div>
         <div class="tile wide reveal">
           <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h2M7 8v8M11 4v16M15 8v8M19 10v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg></div>
@@ -738,8 +764,8 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
         <li lang="es">Español</li><li lang="pt-BR">Português (Brasil)</li><li lang="ja">日本語</li><li lang="ko">한국어</li><li lang="zh-Hans">简体中文</li>
       </ul>
       <div class="duo" dir="ltr">
-        <figure><div class="phone"><img src="img/c-en-focus-setup.jpg" alt="Focus setup in English" loading="lazy"></div><figcaption>English</figcaption></figure>
-        <figure><div class="phone"><img src="img/c-ar-focus-setup.jpg" alt="Focus setup in Arabic" loading="lazy"></div><figcaption lang="ar">العربية</figcaption></figure>
+        <figure><div class="phone"><img src="img/shots/en-focus-setup.jpg" alt="Focus setup in English" loading="lazy"></div><figcaption>English</figcaption></figure>
+        <figure><div class="phone"><img src="img/shots/ar-focus-setup.jpg" alt="Focus setup in Arabic" loading="lazy"></div><figcaption lang="ar">العربية</figcaption></figure>
       </div>
     </div>
   </section>
@@ -884,6 +910,7 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
   var altEls = document.querySelectorAll('[data-i18n-alt]');
   var ariaEls = document.querySelectorAll('[data-i18n-aria]');
   var swapImgs = document.querySelectorAll('img[data-ar]');
+  var shotImgs = document.querySelectorAll('img[data-shot]');
   textEls.forEach(function (el) { EN[el.dataset.i18n] = el.innerHTML; });
   altEls.forEach(function (el) { EN[el.dataset.i18nAlt] = el.alt; });
   ariaEls.forEach(function (el) { EN[el.dataset.i18nAria] = el.getAttribute('aria-label'); });
@@ -904,8 +931,9 @@ footer { border-top: 1px solid var(--line); padding-block: 44px 56px; color: var
       textEls.forEach(function (el) { el.innerHTML = t(el.dataset.i18n); });
       altEls.forEach(function (el) { el.alt = t(el.dataset.i18nAlt); });
       ariaEls.forEach(function (el) { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
-      // Real app screens exist in English and Arabic; other languages show the English ones.
+      // Real app screens, captured in every language.
       swapImgs.forEach(function (img) { img.src = next === 'ar' ? img.dataset.ar : img.dataset.en; });
+      shotImgs.forEach(function (img) { img.src = 'img/shots/' + next + '-' + img.dataset.shot + '.jpg'; });
       langSelect.value = next;
       setMood(current);
       voiceLang();
